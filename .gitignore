@@ -1,2 +1,25 @@
+# images
+*.jpeg
+*.jpg
+*.png
+*.ico
+*.gif
+
+# settings
 settings.py
 
+# python
+*.py[cod]
+*.egg
+*.so
+*.egg-info
+dist
+build
+
+# others
+*.sql
+*.bak
+
+# logs
+*_log.txt
+*.log
