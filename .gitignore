@@ -7,6 +7,7 @@
 
 # settings
 #settings.py
+feiton_cfg_default.py
 
 # python
 *.py[cod]
