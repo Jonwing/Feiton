@@ -25,3 +25,6 @@ build
 # logs
 *_log.txt
 *.log
+
+# migrate scripts
+migrations/00*

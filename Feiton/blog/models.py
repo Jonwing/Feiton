@@ -22,7 +22,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Catagory(models.Model):
+class Category(models.Model):
     name = models.CharField(u"分类", max_length=50)
     create_time = models.DateTimeField(auto_now_add=True)
 
@@ -30,13 +30,13 @@ class Catagory(models.Model):
         return self.name
 
 
-class Artilces(models.Model):
+class Article(models.Model):
     caption = models.CharField(u"标题", max_length=30)
     subcaption = models.CharField(u"副标题", max_length=30)
     publish_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Author)
-    catagory = models.ForeignKey(Catagory)
+    catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
     content = UEditorField(
         u"内容", width=600, height=300, toolbars="full",
@@ -50,8 +50,8 @@ class Artilces(models.Model):
         return self.caption
 
 
-class Statistics(models.Model):
-    article = models.OneToOneField(Artilces)
+class Statistic(models.Model):
+    article = models.OneToOneField(Article)
     visits = models.IntegerField()
     comments = models.IntegerField()
     likes = models.IntegerField()
