@@ -7,6 +7,6 @@
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
-    'Feiton.blog.views',
+    'blog.views',
     url(r'^home$', 'index', name='home_page'),
     )

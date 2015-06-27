@@ -11,7 +11,7 @@
 
 body {
   	background-color: #ffffff;
-  	font-family: '冬青黑体','Montserrat','微软雅黑','文泉驿微米黑',sans-serif;
+  	font-family: '微软雅黑','冬青黑体','Montserrat','文泉驿微米黑',sans-serif;
     font-weight: 400;
     font-size: 14px;
     color: #555;
@@ -22,8 +22,8 @@ body {
 
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+	font-family: '微软雅黑', sans-serif;
+    font-weight: 400;
     color: #333;
 }
 
