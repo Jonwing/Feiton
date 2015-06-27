@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load duoshuo_tags %}
+{% duoshuo_comments %}
 
 {% block content %}
 	<!-- +++++ blog Section +++++ -->
@@ -23,6 +25,8 @@
   </div>
   <div class="row mt">  
     <div class="col-lg-6 col-lg-offset-3 centered">
+    <!-- TODO: update thread key title  url etc.. -->
+      <div class="ds-thread" data-thread-key="1" data-title="毕业札记" data-url="/blog/home"></div>
         <form role="form">
           <div class="form-group">
             <input type="name" class="form-control" id="NameInputEmail1" placeholder="你的名字或者昵称">
@@ -46,7 +50,6 @@
 </div><!-- /ww -->
 {% endblock content %}
 	<!-- +++++ Projects Section +++++ -->
-  
 	
 {% block footer %}	
 	<!-- +++++ Footer Section +++++ -->
@@ -82,3 +85,17 @@
 		</div>
 	</div>
   {% endblock footer %}	
+  {% block script %}
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jonwing"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- 多说公共JS代码 end -->
+{% endblock script %}
