@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load humanize %}
 
 {% block content %}
     <div id="ww">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
+                {% for article in articles %}
                     <ul>
                         <p class="list-top">
-                            这是发表时间
+                            {{ article.update_time|naturaltime }}
                         </p>
                         <h4 class="title">
-                            <a href="#">这是title</a>
+                            <a href="/articles/{{ article.id }}">{{ article.caption }}</a>
                         </h4>
                         <div class="list-footer">
-                            <a href="#">阅读 - </a>
-                            <a 评论="#"  class="link">评论 - </a>
-                            <span>喜欢</span>
+                            <a>阅读 | </a>
+                            <a>评论 | </a>
+                            <a href="#" class="link">喜欢</a>
                         </div>
                         <hr>
                     </ul>
+                {% endfor %}
                     <ul>
                         <p class="list-top">
                             这是发表时间
