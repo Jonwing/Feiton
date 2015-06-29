@@ -8,3 +8,7 @@ def index(request):
     latest_post = Article.objects.order_by("-publish_time").first()
 
     return render_to_response("index.html", {"latest_post": latest_post})
+
+
+def articles_list(request):
+    return render_to_response("articles.html")

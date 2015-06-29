@@ -33,7 +33,47 @@ h1 {
 	margin-bottom: 10px;
 }
 
+.title{
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: 0;
+    display: inherit;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.5;
+}
 
+.list-top{
+    margin-top: 8px;
+    margin-left: 0;
+    margin-bottom: 8px;
+    margin-right: 0;
+    font-size: 12px;
+}
+
+.list-footer{
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+.list{
+    position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-bottom: 17px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 17px;
+    border-bottom: 1px dashed #d9d9d9;
+    box-sizing:border-box;
+    word-warp:break-word;
+}
+
+.link{
+    color: #4A708B;
+}
 
 /* Paragraph & Typographic */
 p {
@@ -48,7 +88,8 @@ p {
 
 /* Links */
 a {
-    color: #1abc9c;
+    /*color: #1abc9c;*/
+    color: #333;
     word-wrap: break-word;
 
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -60,7 +101,8 @@ a {
 
 a:hover,
 a:focus {
-    color: #7b7b7b;
+    /*color: #7b7b7b;*/
+    color: #337ab7;
     text-decoration: none;
     outline: 0;
 }
@@ -151,7 +193,7 @@ a:after {
 #footer {
 	background-color: #2f2f2f;
 	padding-top: 25px;
-	padding-bottom: 25px; 
+	padding-bottom: 25px;
 }
 
 #footer p {
@@ -208,10 +250,10 @@ bt {
 
 /* ================== PORTFOLIO IMAGES HOVER EFFECT ================== */
 /* Effects also are controled by hover.zoom.js */
-.zoom { 
-    display:block; 
-    position:relative; 
-    overflow:hidden; 
+.zoom {
+    display:block;
+    position:relative;
+    overflow:hidden;
     background:transparent url(../img/loader.gif) no-repeat center;
 }
 
