@@ -105,6 +105,9 @@ STATICFILES_DIRS = (
 DUOSHUO_SECRET = '77e5764bfb95da1179b4d65aa90b94a3'
 DUOSHUO_SHORT_NAME = 'Feiton'
 
+# Email settings
+ADMIN_EMAIL = 'jonwing.lee@gmail.com'
+
 if DEBUG:
     from Feiton.config.feiton_cfg_dev import *
 else:
