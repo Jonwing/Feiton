@@ -24,7 +24,7 @@ def article_detail(request, article_id):
 
 
 def contact_me(request):
-    raise Http404
+    return render_to_response("contact_me.html")
 
 
 def about(request):

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div id="ww">
+    <div class="container">
+        <div class="row mt">
+            <div class="col-lg-6 col-lg-offset-3 centered">
+                <h3>请联系我！</h3>
+                <hr>
+                <p>欢迎：吐槽探讨勾搭谈理想聊人生</p>
+                <p>如回复，定知无不言，言必先Google</p>
+                <p>原则：客(zheng)观(jing)，真(xia)诚(che)</p>
+                <p>或(yi)者(ben)客(zheng)观(jing)且(de)真(xia)诚(che)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                <form role="form">
+                  <div class="form-group">
+                    <input type="name" class="form-control" id="name" placeholder="你的名字或者昵称">
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="如有回复将通过此邮箱联系你">
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <input type="emmail" class="form-control" id="subject" placeholder="主题">
+                    <br>
+                  </div>
+                  <textarea class="form-control" rows="7" id="content" placeholder="在这里输入想说的内容"></textarea>
+                  <br>
+                  <button type="submit" class="btn btn-primary">发送</button>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
