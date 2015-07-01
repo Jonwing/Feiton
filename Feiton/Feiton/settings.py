@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'blog',
     'DjangoUeditor',
     'duoshuo',
+    'utils',
 )
 
 MIDDLEWARE_CLASSES = (

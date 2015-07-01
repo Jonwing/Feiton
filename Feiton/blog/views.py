@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import threading
+
 from django.shortcuts import (
     render_to_response,
     get_object_or_404,
@@ -6,9 +11,7 @@ from django.shortcuts import (
 from django.template import RequestContext
 from models import Article
 from forms import ContactForm
-from django.core.mail import send_mail
-
-from Feiton.settings import ADMIN_EMAIL
+from utils.mails import send_format_mail
 
 
 # Create your views here.
@@ -35,17 +38,20 @@ def contact_me(request):
         letter = ContactForm(request.POST)
         if letter.is_valid():
             letter_cd = letter.cleaned_data
-            send_mail(
-                letter_cd['subject'],
-                letter_cd['content'],
-                letter_cd['email'],
-                [ADMIN_EMAIL],
-                # fail_silently=True
+            mail_thread = threading.Thread(
+                target=send_format_mail,
+                name="Email thread",
+                args=(letter_cd,)
                 )
-            print "send done"
-        return redirect("home_page")
+            mail_thread.start()
+            mail_thread.join()
 
-    return render_to_response("contact_me.html",context_instance=RequestContext(request))
+        return render_to_response("thanks.html")
+
+    return render_to_response(
+        "contact_me.html",
+        context_instance=RequestContext(request)
+        )
 
 
 def about(request):
