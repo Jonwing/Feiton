@@ -1,8 +1,14 @@
 from django.shortcuts import (
     render_to_response,
     get_object_or_404,
-    Http404)
+    Http404,
+    redirect)
+from django.template import RequestContext
 from models import Article
+from forms import ContactForm
+from django.core.mail import send_mail
+
+from Feiton.settings import ADMIN_EMAIL
 
 
 # Create your views here.
@@ -24,7 +30,22 @@ def article_detail(request, article_id):
 
 
 def contact_me(request):
-    raise Http404
+    if request.method == 'POST':
+        print request.POST
+        letter = ContactForm(request.POST)
+        if letter.is_valid():
+            letter_cd = letter.cleaned_data
+            send_mail(
+                letter_cd['subject'],
+                letter_cd['content'],
+                letter_cd['email'],
+                [ADMIN_EMAIL],
+                # fail_silently=True
+                )
+            print "send done"
+        return redirect("home_page")
+
+    return render_to_response("contact_me.html",context_instance=RequestContext(request))
 
 
 def about(request):
