@@ -96,14 +96,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
-# duoshuo comments SDK settings
-DUOSHUO_SECRET = '77e5764bfb95da1179b4d65aa90b94a3'
-DUOSHUO_SHORT_NAME = 'Feiton'
 
 if DEBUG:
     from Feiton.config.feiton_cfg_dev import *
