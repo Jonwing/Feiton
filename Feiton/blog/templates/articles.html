@@ -29,9 +29,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 centered">
-                    <a type="button" href="">previous</a>
-                    <a type="button" href=""></a>
-                    <a type="button" href="">next</a>
+                    <a class="btn btn-default" {% if articles.has_previous %}href="?page={{ articles.previous_page_number }}"{% endif %} {% if not articles.has_previous %}disabled="disabled"{% endif %}>上一页</a>
+                    <span>第{{ articles.number }}/{{ articles.paginator.num_pages }}页</span>
+                    <a class="btn btn-default" {% if articles.has_next %}href="?page={{ articles.next_page_number }}"{% endif %} {% if not articles.has_next %}disabled="disabled"{% endif %}>下一页</a>
                 </div>
             </div>
         </div>
