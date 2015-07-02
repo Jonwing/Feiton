@@ -9,8 +9,14 @@ from django.shortcuts import (
     Http404,
     redirect)
 from django.template import RequestContext
+from django.core.paginator import (
+    Paginator,
+    EmptyPage,
+    PageNotAnInteger
+    )
 from models import Article
 from forms import ContactForm
+
 from utils.mails import send_format_mail
 
 
@@ -23,7 +29,16 @@ def index(request):
 
 
 def articles_list(request):
-    articles = Article.objects.order_by("-publish_time").all()
+    all_articles = Article.objects.order_by("-publish_time").all()
+    paginator = Paginator(all_articles, 15)
+    page = request.GET.get('page', 1)
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
     return render_to_response("articles.html", {"articles": articles})
 
 
