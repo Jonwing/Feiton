@@ -59,3 +59,11 @@ class Statistic(models.Model):
 
     def __unicode__(self):
         return u"blog statistics"
+
+
+class Topset(models.Model):
+    topset = models.ForeignKey(Article)
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u"the top post"

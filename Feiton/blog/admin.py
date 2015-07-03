@@ -4,7 +4,8 @@ from models import (
     Author,
     Tag,
     Category,
-    Statistic)
+    Statistic,
+    Topset)
 # Register your models here.
 
 admin.site.register([
@@ -12,4 +13,6 @@ admin.site.register([
     Author,
     Tag,
     Category,
-    Statistic])
+    Statistic,
+    Topset
+    ])
