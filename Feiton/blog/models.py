@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.conf import settings
 from DjangoUeditor.models import UEditorField
 
 
@@ -32,17 +33,17 @@ class Category(models.Model):
 
 class Article(models.Model):
     caption = models.CharField(u"标题", max_length=30)
-    subcaption = models.CharField(u"副标题", max_length=30)
+    subcaption = models.CharField(u"副标题", max_length=30, blank=True)
     publish_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Author)
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
     content = UEditorField(
-        u"内容", width=600, height=300, toolbars="full",
-        imagePath="images/", filePath="add_on_files/",
-        upload_settings={"imageMaxSize": 1204000},
-        command=None, blank=True
+        verbose_name="content",
+        imagePath=settings.UEDITOR_SETTINGS["upload"]["imagePathFormat"],
+        filePath=settings.UEDITOR_SETTINGS["upload"]["filePathFormat"],
+        settings=settings.UEDITOR_SETTINGS["config"],
         )
     abstract = models.TextField(blank=True)
 
