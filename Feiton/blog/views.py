@@ -14,8 +14,9 @@ from django.core.paginator import (
     EmptyPage,
     PageNotAnInteger
     )
-from models import Article, Topset
+from models import Article, Topset, Statistic
 from forms import ContactForm
+from Feiton.settings import ARTICLES_PER_PAGE
 
 from utils.mails import send_format_mail
 
@@ -30,7 +31,7 @@ def index(request):
 
 def articles_list(request):
     all_articles = Article.objects.order_by("-publish_time").all()
-    paginator = Paginator(all_articles, 15)
+    paginator = Paginator(all_articles, ARTICLES_PER_PAGE)
     page = request.GET.get('page', 1)
     try:
         articles = paginator.page(page)
@@ -44,7 +45,20 @@ def articles_list(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    return render_to_response("article_detail.html", {"article": article})
+    statistic = Statistic.objects.update_or_create(
+        article=article,
+        defaults={
+            "visits": (article.statistic and article.statistic.visits+1 or 1),
+            }
+        )[0]
+    print statistic.visits
+    return render_to_response(
+        "article_detail.html",
+        {
+            "article": article,
+            "statistic": statistic
+            }
+        )
 
 
 def contact_me(request):
