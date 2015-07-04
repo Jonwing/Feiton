@@ -105,6 +105,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+ARTICLES_PER_PAGE = 15
+
 if DEBUG:
     from Feiton.config.feiton_cfg_dev import *
 else:
