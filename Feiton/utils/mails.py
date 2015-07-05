@@ -8,7 +8,7 @@ from Feiton.settings import EMAIL_SUBJECT_PREFIX, EMAIL_ADDRESS_LIST
 def send_format_mail(dictionary):
     subject = EMAIL_SUBJECT_PREFIX + '-' + dictionary['name'] + ':'\
         + dictionary['subject']
-    content = dictionary['content']
+    content = dictionary['email'] + '\n' + dictionary['content']
     from_address = dictionary['email']
     to_address = EMAIL_ADDRESS_LIST
     try:
