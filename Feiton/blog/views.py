@@ -48,10 +48,8 @@ def article_detail(request, article_id):
     statistic = Statistic.objects.update_or_create(
         article=article,
         defaults={
-            "visits": (article.statistic and article.statistic.visits+1 or 1),
-            }
+            "visits": (article.statistic and article.statistic.visits+1 or 1)}
         )[0]
-    print statistic.visits
     return render_to_response(
         "article_detail.html",
         {
@@ -85,3 +83,14 @@ def contact_me(request):
 
 def about(request):
     raise Http404
+
+
+def like_article(request, article_id, like=0):
+    article = get_object_or_404(Article, id=article_id)
+    print like
+    if like:
+        article.statistic.likes += 1
+        print "+1"
+        article.statistic.save()
+
+    return redirect("article_detail", article_id=article.id)

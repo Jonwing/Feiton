@@ -18,7 +18,7 @@
           <div class="list-footer">
               <a>阅读({{ article.statistic.visits }}) | </a>
               <a>评论({{ article.statistic.comments }}) | </a>
-              <a class="link" href="#">喜欢({{ article.statistic.likes }})</a>
+              <a class="link" href="{% url "like_article" article.id True %}">喜欢({{ article.statistic.likes }})</a>
           </div>
           <br>
           <p>
