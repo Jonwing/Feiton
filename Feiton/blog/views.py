@@ -71,7 +71,7 @@ def contact_me(request):
                 args=(letter_cd,)
                 )
             mail_thread.start()
-            mail_thread.join()
+            # mail_thread.join()
 
         return render_to_response("thanks.html")
 
