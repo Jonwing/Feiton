@@ -21,9 +21,7 @@ from Feiton.settings import ARTICLES_PER_PAGE
 from utils.mails import send_format_mail
 
 
-# Create your views here.
 def index(request):
-    # TODO: get the top-post and place it on home page
     specified_post = Topset.objects.order_by("-created_time").first().topset
 
     return render_to_response("index.html", {"article": specified_post})
@@ -90,7 +88,6 @@ def like_article(request, article_id, like=0):
     print like
     if like:
         article.statistic.likes += 1
-        print "+1"
         article.statistic.save()
 
     return redirect("article_detail", article_id=article.id)

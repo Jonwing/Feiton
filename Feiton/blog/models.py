@@ -36,6 +36,7 @@ class Article(models.Model):
     subcaption = models.CharField(u"副标题", max_length=30, blank=True)
     publish_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now_add=True)
+    is_private = models.BooleanField(default=False)
     author = models.ForeignKey(Author)
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
@@ -71,3 +72,18 @@ class Topset(models.Model):
 
     def __unicode__(self):
         return str(self.topset)
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article)
+    created_time = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=True)
+    reply_to = models.IntegerField(blank=True)
+    commenter = models.CharField(max_length=30)
+    content = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ['-created_time']
+
+    def __unicode__(self):
+        return str(self.commenter) + "'s comment on " + str(self.article)
