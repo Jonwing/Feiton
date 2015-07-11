@@ -22,7 +22,7 @@ from Feiton.settings import (
     ARTICLES_PER_PAGE,
     DUOSHUO_COMMENTS_SYNC_URL,
     DUOSHUO_SECRET,
-    DUOSHUO_SHORT_NAME
+    DUOSHUO_LOCAL_DOMAIN_NAME
     )
 
 from utils.mails import send_format_mail
@@ -107,7 +107,7 @@ def sync_comments(request):
     print request.POST
     json_comment = get_comments_from_duoshuo(
         DUOSHUO_COMMENTS_SYNC_URL,
-        short_name=DUOSHUO_SHORT_NAME,
+        short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
         secret=DUOSHUO_SECRET
         )
     for cm in json_comment['response']:
