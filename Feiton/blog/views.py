@@ -123,6 +123,6 @@ def sync_comments(request):
                 commenter=cm['meta'].get('author_name', 'Passanger'),
                 commenter_email=cm['meta'].get('author_email', None),
                 content=cm['meta'].get('message', 'no message'),
-                created_time=cm['meta']['created_at']
+                defaults={'created_time': cm['meta']['created_at']}
                 )
             return HttpResponse(status=200)
