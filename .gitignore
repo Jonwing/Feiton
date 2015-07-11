@@ -6,7 +6,7 @@
 *.gif
 
 # settings
-#settings.py
+settings.py
 feiton_cfg_rel.py
 feiton_cfg_dev.py
 

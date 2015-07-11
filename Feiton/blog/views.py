@@ -113,7 +113,7 @@ def sync_comments(request):
     for cm in json_comment['response']:
         if cm['action'] == 'create':
             comment = Comment(
-                article=Article.objects.get(id=cm['meta']['thread_id']),
+                article=Article.objects.get(id=cm['meta']['thread_key']),
                 commenter=cm['meta'].get('author_name', 'Passanger'),
                 comment_email=cm['meta'].get('author_email', None),
                 content=cm['meta'].get('message', 'no message'),
