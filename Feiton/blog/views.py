@@ -118,7 +118,7 @@ def sync_comments(request):
                 article = Article.objects.get(id=cm['meta']['thread_key'])
             except ObjectDoesNotExist:
                 continue
-            comment, created = Comment.objects.get_or_create(
+            comment, created = Comment.objects.update_or_create(
                 article=Article.objects.get(id=cm['meta']['thread_key']),
                 commenter=cm['meta'].get('author_name', 'Passanger'),
                 commenter_email=cm['meta'].get('author_email', None),
