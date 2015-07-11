@@ -80,6 +80,7 @@ class Comment(models.Model):
     is_public = models.BooleanField(default=True)
     reply_to = models.IntegerField(blank=True)
     commenter = models.CharField(max_length=30)
+    commenter_email = models.EmailField(blank=True)
     content = models.CharField(max_length=50)
 
     class Meta:

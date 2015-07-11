@@ -7,18 +7,25 @@ from django.shortcuts import (
     render_to_response,
     get_object_or_404,
     Http404,
-    redirect)
+    redirect
+    )
 from django.template import RequestContext
 from django.core.paginator import (
     Paginator,
     EmptyPage,
     PageNotAnInteger
     )
-from models import Article, Topset, Statistic
+from models import Article, Topset, Statistic, Comment
 from forms import ContactForm
-from Feiton.settings import ARTICLES_PER_PAGE
+from Feiton.settings import (
+    ARTICLES_PER_PAGE,
+    DUOSHUO_COMMENTS_SYNC_URL,
+    DUOSHUO_SECRET,
+    DUOSHUO_SHORT_NAME
+    )
 
 from utils.mails import send_format_mail
+from utils.duoshuoapi import get_comments_from_duoshuo
 
 
 def index(request):
@@ -91,3 +98,23 @@ def like_article(request, article_id, like=0):
         article.statistic.save()
 
     return redirect("article_detail", article_id=article.id)
+
+
+def sync_comments(request):
+    # TODO: validate signature
+    print request.POST
+    json_comment = get_comments_from_duoshuo(
+        DUOSHUO_COMMENTS_SYNC_URL,
+        short_name=DUOSHUO_SHORT_NAME,
+        secret=DUOSHUO_SECRET
+        )
+    for cm in json_comment['response']:
+        if cm['action'] == 'create':
+            comment = Comment(
+                article=Article.objects.get(id=cm['meta']['thread_id']),
+                commenter=cm['meta'].get('author_name', 'Passanger'),
+                comment_email=cm['meta'].get('author_email', None),
+                content=cm['meta'].get('message', 'no message'),
+                created_time=cm['meta']['created_at']
+                )
+            comment.save()

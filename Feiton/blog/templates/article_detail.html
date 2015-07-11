@@ -18,6 +18,7 @@
           <div class="list-footer">
               <a>阅读({{ statistic.visits }}) | </a>
               <a>评论({{ statistic.comments }})| </a>
+              <!-- <span class="ds-thread-count" data-thread-key="{{ article.id }}" data-count-type="comments"></span> -->
               <a class="link" href="{% url "like_article" article.id True %}">喜欢({{ statistic.likes }})</a>
           </div>
           <br>
@@ -51,6 +52,13 @@
           ds.charset = 'UTF-8';
           (document.getElementsByTagName('head')[0] 
            || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
       })();
   </script>
   <!-- 多说公共JS代码 end -->

@@ -4,7 +4,6 @@
 {% duoshuo_comments %}
 
 {% block content %}
-	<!-- +++++ blog Section +++++ -->
 	<div id="ww">
 	    <div class="container">
 			<div class="row">
@@ -32,14 +31,12 @@
     <div class="container">
       <div class="row">  
         <div class="col-lg-8 col-lg-offset-2">
-          <!-- TODO: update thread key title  url etc.. -->
           {# {% include "comments.html" %} #}
         </div>
       </div><!-- /row -->
     </div> <!-- /container -->
-</div><!-- /ww -->
+</div>
 {% endblock content %}
-<!-- +++++ Projects Section +++++ -->
 	
 {% block footer %}	
 {{ block.super }}
@@ -56,5 +53,4 @@
            || document.getElementsByTagName('body')[0]).appendChild(ds);
       })();
   </script>
-  <!-- 多说公共JS代码 end -->
 {% endblock script %}
