@@ -118,12 +118,11 @@ def sync_comments(request):
                 article = Article.objects.get(id=cm['meta']['thread_key'])
             except ObjectDoesNotExist:
                 continue
-            comment = Comment(
+            comment, created = Comment.objects.get_or_create(
                 article=Article.objects.get(id=cm['meta']['thread_key']),
                 commenter=cm['meta'].get('author_name', 'Passanger'),
                 commenter_email=cm['meta'].get('author_email', None),
                 content=cm['meta'].get('message', 'no message'),
                 created_time=cm['meta']['created_at']
                 )
-            comment.save()
             return HttpResponse(status=200)
