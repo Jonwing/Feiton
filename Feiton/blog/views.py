@@ -9,6 +9,7 @@ from django.shortcuts import (
     Http404,
     redirect
     )
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
@@ -125,3 +126,4 @@ def sync_comments(request):
                 created_time=cm['meta']['created_at']
                 )
             comment.save()
+            return HttpResponse(status=200)
