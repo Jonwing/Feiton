@@ -78,7 +78,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article)
     created_time = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
-    reply_to = models.IntegerField(blank=True)
+    reply_to = models.IntegerField(null=True)
     commenter = models.CharField(max_length=30)
     commenter_email = models.EmailField(blank=True)
     content = models.CharField(max_length=50)
