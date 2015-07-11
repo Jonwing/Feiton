@@ -10,6 +10,7 @@ from django.shortcuts import (
     redirect
     )
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import (
     Paginator,
     EmptyPage,
@@ -100,6 +101,7 @@ def like_article(request, article_id, like=0):
     return redirect("article_detail", article_id=article.id)
 
 
+@csrf_exempt
 def sync_comments(request):
     # TODO: validate signature
     print request.POST
