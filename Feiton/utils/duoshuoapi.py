@@ -17,4 +17,6 @@ def get_comments_from_duoshuo(base_url, **kwargs):
     query_url = '?'.join([base_url, query_args])
     response = urllib2.urlopen(query_url).read()
     json_data = json.loads(response)
-
+    if json_data['code']:
+        return None
+    return json_data
