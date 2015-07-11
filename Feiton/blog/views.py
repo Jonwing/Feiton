@@ -120,7 +120,7 @@ def sync_comments(request):
             comment = Comment(
                 article=Article.objects.get(id=cm['meta']['thread_key']),
                 commenter=cm['meta'].get('author_name', 'Passanger'),
-                comment_email=cm['meta'].get('author_email', None),
+                commenter_email=cm['meta'].get('author_email', None),
                 content=cm['meta'].get('message', 'no message'),
                 created_time=cm['meta']['created_at']
                 )
