@@ -10,6 +10,7 @@ from django.shortcuts import (
     redirect
     )
 from django.template import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import (
     Paginator,
@@ -112,6 +113,10 @@ def sync_comments(request):
         )
     for cm in json_comment['response']:
         if cm['action'] == 'create':
+            try:
+                article = Article.objects.get(id=cm['meta']['thread_key'])
+            except ObjectDoesNotExist:
+                continue
             comment = Comment(
                 article=Article.objects.get(id=cm['meta']['thread_key']),
                 commenter=cm['meta'].get('author_name', 'Passanger'),
