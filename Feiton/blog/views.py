@@ -127,4 +127,4 @@ def sync_comments(request):
                 content=cm['meta'].get('message', 'no message'),
                 defaults={'created_time': cm['meta']['created_at']}
                 )
-    return HttpResponse(json_comment)
+    return HttpResponse(status=200)
