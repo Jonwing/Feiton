@@ -112,6 +112,8 @@ def sync_comments(request):
         short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
         secret=DUOSHUO_SECRET
         )
+    if json_comment is None:
+        raise Http404
     for cm in json_comment['response']:
         if cm['action'] == 'create':
             try:
@@ -125,4 +127,4 @@ def sync_comments(request):
                 content=cm['meta'].get('message', 'no message'),
                 defaults={'created_time': cm['meta']['created_at']}
                 )
-            return HttpResponse(status=200)
+    return HttpResponse(json_comment)
