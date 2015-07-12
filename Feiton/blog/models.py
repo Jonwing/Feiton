@@ -81,7 +81,7 @@ class Comment(models.Model):
     reply_to = models.IntegerField(null=True)
     commenter = models.CharField(max_length=30)
     commenter_email = models.EmailField(blank=True)
-    content = models.CharField(max_length=50)
+    content = models.TextField(blank=True)
 
     class Meta:
         ordering = ['-created_time']
