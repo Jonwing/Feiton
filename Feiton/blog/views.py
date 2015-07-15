@@ -108,7 +108,7 @@ def like_article(request, article_id, like=0):
 def sync_comments(request):
     # TODO: validate signature
     # print request.POST
-    last_log = Duoshuoattr.objects.order_by('-created_time')[0]
+    last_log = Duoshuoattr.objects.order_by('-create_time')[0]
     json_comment = get_comments_from_duoshuo(
         DUOSHUO_COMMENTS_SYNC_URL,
         short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
