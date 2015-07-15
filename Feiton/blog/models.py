@@ -4,6 +4,7 @@
 from django.db import models
 from django.conf import settings
 from DjangoUeditor.models import UEditorField
+from django.utils import timezone
 
 
 class Author(models.Model):
@@ -70,13 +71,16 @@ class Topset(models.Model):
     topset = models.ForeignKey(Article)
     created_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_time']
+
     def __unicode__(self):
         return str(self.topset)
 
 
 class Comment(models.Model):
     article = models.ForeignKey(Article)
-    created_time = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(default=timezone.now())
     is_public = models.BooleanField(default=True)
     reply_to = models.IntegerField(null=True)
     commenter = models.CharField(max_length=30)

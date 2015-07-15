@@ -28,6 +28,7 @@ from Feiton.settings import (
     )
 
 from utils.mails import send_format_mail
+from utils.models import Duoshuoattr
 from utils.duoshuoapi import get_comments_from_duoshuo
 
 
@@ -106,11 +107,13 @@ def like_article(request, article_id, like=0):
 @csrf_exempt
 def sync_comments(request):
     # TODO: validate signature
-    print request.POST
+    # print request.POST
+    last_log = Duoshuoattr.objects.order_by('-created_time')[0]
     json_comment = get_comments_from_duoshuo(
         DUOSHUO_COMMENTS_SYNC_URL,
         short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
-        secret=DUOSHUO_SECRET
+        secret=DUOSHUO_SECRET,
+        since_id=last_log.since_id
         )
     if json_comment is None:
         raise Http404
@@ -126,5 +129,17 @@ def sync_comments(request):
                 commenter_email=cm['meta'].get('author_email', None),
                 content=cm['meta'].get('message', 'no message'),
                 defaults={'created_time': cm['meta']['created_at']}
+                )
+        if cm == json_comment['response'][-1]:
+            last_sync_id = Duoshuoattr(since_id=int(cm['log_id']))
+            last_sync_id.save()
+    # update comment number
+    all_articles = Article.objects.all()
+    for article in all_articles:
+        cms = Comment.objects.filter(article=article).count()
+        if cms:
+            Statistic.objects.update_or_create(
+                article=article,
+                defaults={'comments': article.statistic and cms or 0}
                 )
     return HttpResponse(status=200)
