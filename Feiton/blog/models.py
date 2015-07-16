@@ -101,10 +101,14 @@ class Comment(models.Model):
 # signal registration
 @receiver(post_save, sender=Comment)
 def new_comment_remind(sender, **kwargs):
-    mail = {
-        'name': sender.commenter + "'s comment on ",
-        'subject': sender.article,
-        'email': sender.commenter_email,
-        'content': sender.content
-    }
-    send_format_mail(mail)
+    new_comment = kwargs.get('instance', None)
+    if new_comment:
+        mail = {
+            'name': new_comment.commenter + "'s comment on ",
+            'subject': new_comment.article,
+            'email': new_comment.commenter_email,
+            'content': new_comment.content
+        }
+        send_format_mail(mail)
+    else:
+        return
