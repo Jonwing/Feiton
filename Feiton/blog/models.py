@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.conf import settings
 from DjangoUeditor.models import UEditorField
 from django.utils import timezone
+
+from utils.mails import send_format_mail
 
 
 class Author(models.Model):
@@ -92,3 +96,15 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return str(self.commenter) + "'s comment on " + str(self.article)
+
+
+# signal registration
+@receiver(post_save, sender=Comment)
+def new_comment_remind(sender, **kwargs):
+    mail = {
+        'name': sender.commenter + "'s comment on ",
+        'subject': sender.article,
+        'email': sender.commenter_email,
+        'content': sender.content
+    }
+    send_format_mail(mail)
