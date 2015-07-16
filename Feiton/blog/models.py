@@ -105,7 +105,7 @@ def new_comment_remind(sender, **kwargs):
     if new_comment:
         mail = {
             'name': new_comment.commenter + "'s comment on ",
-            'subject': new_comment.article,
+            'subject': str(new_comment.article),
             'email': new_comment.commenter_email,
             'content': new_comment.content
         }
