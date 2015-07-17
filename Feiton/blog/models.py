@@ -106,7 +106,8 @@ def new_comment_remind(sender, **kwargs):
         mail = {
             'name': new_comment.commenter + "'s comment on ",
             'subject': str(new_comment.article),
-            'email': new_comment.commenter_email,
+            'email': new_comment.commenter_email
+            if new_comment.commenter_email else 'someone@unknow.com',
             'content': new_comment.content
         }
         send_format_mail(mail)
