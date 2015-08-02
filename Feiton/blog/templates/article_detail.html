@@ -19,7 +19,7 @@
               <a>阅读({{ statistic.visits }}) | </a>
               <a>评论({{ statistic.comments }})| </a>
               <!-- <span class="ds-thread-count" data-thread-key="{{ article.id }}" data-count-type="comments"></span> -->
-              <a class="link" href="{% url "like_article" article.id True %}">喜欢({{ statistic.likes }})</a>
+              <a class="link" href="{% url "like_article" article.id%}">喜欢({{ statistic.likes }})</a>
           </div>
           <br>
         </div><!-- /col-lg-8 -->

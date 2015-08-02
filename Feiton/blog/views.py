@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import threading
+import datetime
 
 from django.shortcuts import (
     render_to_response,
@@ -22,7 +23,9 @@ from models import Article, Topset, Statistic, Comment
 from forms import ContactForm
 from Feiton.settings import (
     ARTICLES_PER_PAGE,
-    DUOSHUO_COMMENTS_SYNC_URL,
+    DUOSHUO_BASE_URL,
+    DUOSHUO_COMMENTS_SYNC_POSTFIX,
+    DUOSHUO_COMMENTS_POSTFIX,
     DUOSHUO_SECRET,
     DUOSHUO_LOCAL_DOMAIN_NAME
     )
@@ -94,12 +97,12 @@ def about(request):
     raise Http404
 
 
-def like_article(request, article_id, like=0):
+def like_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    print like
-    if like:
+    if not request.session.get('like_%s' % article_id, None):
         article.statistic.likes += 1
         article.statistic.save()
+        request.session['like_%s' % article_id] = 'liked'
 
     return redirect("article_detail", article_id=article.id)
 
@@ -110,7 +113,7 @@ def sync_comments(request):
     # print request.POST
     last_log = Duoshuoattr.objects.order_by('-create_time')[0]
     json_comment = get_comments_from_duoshuo(
-        DUOSHUO_COMMENTS_SYNC_URL,
+        DUOSHUO_BASE_URL+DUOSHUO_COMMENTS_SYNC_POSTFIX,
         short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
         secret=DUOSHUO_SECRET,
         since_id=last_log.since_id
@@ -143,3 +146,18 @@ def sync_comments(request):
                 defaults={'comments': article.statistic and cms or 0}
                 )
     return HttpResponse(status=200)
+
+
+def sort_articles_by_month():
+    '''
+    return a list of articles grouped by month
+    [[article01, article02,...],[article21,article22,...],...]
+    '''
+    publish_times = Article.objects.values_list('publish_time', flat=True)
+    months = set(
+        [datetime.datetime(x.year, x.month, 1) for x in publish_times])
+    sortedArticles = [Article.objects.filter(
+        publish_time__year=x.year,
+        publish_time__month=x.month)
+        for x in months]
+    return sortedArticles
