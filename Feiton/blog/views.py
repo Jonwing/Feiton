@@ -36,7 +36,7 @@ from utils.duoshuoapi import get_comments_from_duoshuo
 
 
 def index(request):
-    specified_post = Topset.objects.order_by("-created_time").first().topset
+    specified_post = Topset.objects.first().topset
 
     return render_to_response("index.html", {"article": specified_post})
 
@@ -55,8 +55,8 @@ def articles_list(request):
     return render_to_response("articles.html", {"articles": articles})
 
 
-def article_detail(request, article_id):
-    article = get_object_or_404(Article, id=article_id)
+def article_detail(request, id, slug):
+    article = get_object_or_404(Article, id=id, slug=slug)
     statistic = Statistic.objects.update_or_create(
         article=article,
         defaults={

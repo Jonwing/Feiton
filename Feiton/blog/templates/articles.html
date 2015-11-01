@@ -13,7 +13,7 @@
                             {{ article.update_time|naturaltime }}
                         </p>
                         <h4 class="title">
-                            <a href="/articles/{{ article.id }}">{{ article.caption }}</a>
+                            <a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a>
                         </h4>
                         <div class="list-footer">
                             <a>阅读({{ article.statistic.visits }}) | </a>
