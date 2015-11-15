@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n bootstrap3 %}
 
 {% block content %}
 <div id="ww">
@@ -18,19 +18,7 @@
             <div class="col-lg-8 col-lg-offset-2 centered">
                 <form role="form" method="POST">
                  {% csrf_token %}
-                  <div class="controls">
-                    <input type="text" class="form-control" name="name" placeholder="你的名字或者昵称">
-                    <br>
-                  </div>
-                  <div class="controls">
-                    <input type="email" class="form-control" name="email" placeholder="如有回复将通过此邮箱联系你">
-                    <br>
-                  </div>
-                  <div class="controls">
-                    <input type="text" class="form-control" name="subject" placeholder="主题">
-                    <br>
-                  </div>
-                  <textarea class="form-control" rows="7" name="content" placeholder="在这里输入想说的内容"></textarea>
+                 {% bootstrap_form form layout='inline' %}
                   <br>
                   <button type="submit" class="btn btn-primary">发送</button>
                 </form>

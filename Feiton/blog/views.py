@@ -4,33 +4,24 @@
 import threading
 import datetime
 
-from django.shortcuts import (
-    render_to_response,
-    get_object_or_404,
-    Http404,
-    redirect
-    )
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import (
-    Paginator,
-    EmptyPage,
-    PageNotAnInteger
-    )
-from models import Article, Topset, Statistic, Comment
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import FormView
+from django.shortcuts import (render_to_response, get_object_or_404,
+                              Http404, redirect)
 from forms import ContactForm
+from models import Article, Topset, Statistic, Comment
 from Feiton.settings import (
     ARTICLES_PER_PAGE,
     DUOSHUO_BASE_URL,
     DUOSHUO_COMMENTS_SYNC_POSTFIX,
-    DUOSHUO_COMMENTS_POSTFIX,
     DUOSHUO_SECRET,
     DUOSHUO_LOCAL_DOMAIN_NAME
     )
 
-from utils.mails import send_format_mail
 from utils.models import Duoshuoattr
 from utils.duoshuoapi import get_comments_from_duoshuo
 
@@ -68,28 +59,6 @@ def article_detail(request, id, slug):
             "article": article,
             "statistic": statistic
             }
-        )
-
-
-def contact_me(request):
-    if request.method == 'POST':
-        print request.POST
-        letter = ContactForm(request.POST)
-        if letter.is_valid():
-            letter_cd = letter.cleaned_data
-            mail_thread = threading.Thread(
-                target=send_format_mail,
-                name="Email thread",
-                args=(letter_cd,)
-                )
-            mail_thread.start()
-            # mail_thread.join()
-
-        return render_to_response("thanks.html")
-
-    return render_to_response(
-        "contact_me.html",
-        context_instance=RequestContext(request)
         )
 
 
@@ -161,3 +130,19 @@ def sort_articles_by_month():
         publish_time__month=x.month)
         for x in months]
     return sortedArticles
+
+
+class ContactView(FormView):
+    template_name = 'contact_me.html'
+    success_template = 'thanks.html'
+    form_class = ContactForm
+
+    def form_valid(self, form):
+        # TODO: use celery to send email
+        mail_thread = threading.Thread(
+            target=form.send_format_mail,
+            name="Feiton Email Thread",
+            args=(form.cleaned_data,)
+            )
+        mail_thread.start()
+        return render_to_response(self.success_template)

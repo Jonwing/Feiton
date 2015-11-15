@@ -41,9 +41,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'blog',
-    'DjangoUeditor',
-    'duoshuo',
     'utils',
+    'duoshuo',
+    'DjangoUeditor',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,6 +75,15 @@ TEMPLATES = [
         },
     },
 ]
+
+# Bootstrap3 settings
+BOOTSTRAP3 = {
+    # Label class to use in horizontal forms
+    'horizontal_label_class': 'col-md-2',
+
+    # Field class to use in horizontal forms
+    'horizontal_field_class': 'col-md-4'
+}
 
 WSGI_APPLICATION = 'Feiton.wsgi.application'
 

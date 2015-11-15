@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from blog.views import ContactView
 
 urlpatterns = [
     url(r"^$", 'blog.views.index', name='home_page'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^articles/', include('blog.urls')),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
-    url(r"^contact$", 'blog.views.contact_me', name="contact_me"),
+    url(r"^contact$", ContactView.as_view(), name="contact_me"),
     url(r"^about$", "blog.views.about", name="about"),
 ]
