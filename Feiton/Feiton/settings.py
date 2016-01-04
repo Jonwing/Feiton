@@ -42,9 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'blog',
     'utils',
-    'duoshuo',
-    'DjangoUeditor',
     'bootstrap3',
+    'pagedown',
 )
 
 MIDDLEWARE_CLASSES = (
