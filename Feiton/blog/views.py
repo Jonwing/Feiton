@@ -29,7 +29,10 @@ from utils.duoshuoapi import get_comments_from_duoshuo
 def index(request):
     specified_post = Topset.objects.first().topset
 
-    return render_to_response("index.html", {"article": specified_post})
+    return render_to_response(
+        "index.html",
+        {"article": specified_post},
+        context_instance=RequestContext(request))
 
 
 def articles_list(request):
@@ -58,7 +61,8 @@ def article_detail(request, id, slug):
         {
             "article": article,
             "statistic": statistic
-            }
+            },
+        context_instance=RequestContext(request)
         )
 
 
@@ -67,19 +71,18 @@ def about(request):
 
 
 def like_article(request, article_id):
-    article = get_object_or_404(Article, id=article_id)
+    article = get_object_or_404(Article, pk=int(article_id))
+    print article
     if not request.session.get('like_%s' % article_id, None):
         article.statistic.likes += 1
         article.statistic.save()
         request.session['like_%s' % article_id] = 'liked'
 
-    return redirect("article_detail", article_id=article.id)
+    return redirect("article_detail", id=article.id, slug=article.slug)
 
 
-@csrf_exempt
+# Deprecated
 def sync_comments(request):
-    # TODO: validate signature
-    # print request.POST
     last_log = Duoshuoattr.objects.order_by('-create_time')[0]
     json_comment = get_comments_from_duoshuo(
         DUOSHUO_BASE_URL+DUOSHUO_COMMENTS_SYNC_POSTFIX,

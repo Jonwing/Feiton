@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from django.conf import settings
 from DjangoUeditor.models import UEditorField
 from django.utils import timezone
-from utils.mails import send_format_mail
+# from utils.mails import send_format_mail
 
 
 class Author(models.Model):
@@ -58,12 +58,7 @@ class Article(models.Model):
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
     abstract = models.TextField(blank=True)
-    content = UEditorField(
-        verbose_name="content",
-        imagePath=settings.UEDITOR_SETTINGS["upload"]["imagePathFormat"],
-        filePath=settings.UEDITOR_SETTINGS["upload"]["filePathFormat"],
-        settings=settings.UEDITOR_SETTINGS["config"],
-        )
+    content = models.TextField()
     slug = models.SlugField(max_length=128, default=u'detail')
 
     class Meta:
@@ -135,6 +130,6 @@ def new_comment_remind(sender, **kwargs):
             if new_comment.commenter_email else 'someone@unknow.com',
             'content': new_comment.content
         }
-        send_format_mail(mail)
+        # send_format_mail(mail)
     else:
         return
