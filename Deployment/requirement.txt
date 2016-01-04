@@ -1,6 +1,5 @@
 django == 1.8.2
 mysql-python == 1.2.5
-DjangoUeditor == 1.8.143
 django-bootstrap3 == 6.2.2
 markdown2 ==  2.3.0
-duoshuo-python-sdk == 0.1
+django-pagedown >= 0.1.1
