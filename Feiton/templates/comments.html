@@ -1,1 +1,20 @@
-<div class="ds-thread" data-thread-key="{{ article.id }}" data-title="{{ article.caption }}" data-url="{% url "home_page" %}{% url "article_detail" article.id article.slug %}"></div>
+<div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
+              <div id="disqus_thread"></div>
+              <script>
+              var disqus_config = function () {
+              this.page.url = 'http://{{ request.get_host }}{% url "article_detail" article.id article.slug %}'; 
+              this.page.identifier = {{ article.id }}; 
+              };
+              
+              (function() { 
+              var d = document, s = d.createElement('script');
+
+              s.src = '//jonwing.disqus.com/embed.js';
+
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            </div>
+          </div>

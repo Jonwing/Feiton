@@ -1,0 +1,19 @@
+<header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <header class="drawer-header">
+      <!-- <img src="/static/css/images/0001.jpg" class="drawer-avatar"> -->
+      <div class="drawer-info">
+      <span class="mdl-layout-title"> iLazur</span>
+      <span> 一个不知道用来干什么的网站。 </span>
+      </div>
+    </header>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="/">首页</a>
+      <a class="mdl-navigation__link" href="{% url "articles" %}">文章</a>
+      <a class="mdl-navigation__link" href="{% url "contact_me" %}">私信</a>
+      <a class="mdl-navigation__link" href="{% url "about" %}">关于</a>
+    </nav>
+  </div>

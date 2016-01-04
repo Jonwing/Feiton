@@ -3,37 +3,47 @@
 {% load humanize %}
 
 {% block content %}
-    <div id="ww">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                {% for article in articles %}
-                    <ul>
-                        <p class="list-top">
-                            {{ article.update_time|naturaltime }}
-                        </p>
-                        <h4 class="title">
-                            <a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a>
-                        </h4>
-                        <div class="list-footer">
-                            <a>阅读({{ article.statistic.visits }}) | </a>
-                            <a>评论({{ article.statistic.comments }}) | </a>
-                            <a>喜欢({{ article.statistic.likes }})</a>
-                        </div>
-                        <hr>
-                    </ul>
-                {% endfor %}
-                </div>
+<div class="blog__posts mdl-grid">
+{% for article in articles %}
+           <div class="mdl-card image-card mdl-cell mdl-cell--12-col">
+             <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta" >
+              <h3><a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a></h3>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 centered">
-                    <a class="btn btn-default" {% if articles.has_previous %}href="?page={{ articles.previous_page_number }}"{% endif %} {% if not articles.has_previous %}disabled="disabled"{% endif %}>上一页</a>
-                    <span>第{{ articles.number }}/{{ articles.paginator.num_pages }}页</span>
-                    <a class="btn btn-default" {% if articles.has_next %}href="?page={{ articles.next_page_number }}"{% endif %} {% if not articles.has_next %}disabled="disabled"{% endif %}>下一页</a>
-                </div>
+            <hr>
+            <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
+              {% autoescape off %}
+                {{ article.abstract }}
+              {% endautoescape %}
             </div>
+            <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+              <div class="minilogo"></div>
+              <div>
+                <strong>{{ article.author }}</strong>
+                <span>{{ article.update_time|naturaltime }}</span>
+              </div>
+               <div class="mdl-layout-spacer"></div>
+              <a href="{% url "article_detail" article.id article.slug %}" class="demo-nav__button" title="show more">
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">arrow_forward</i>
+              </button>
+            </a>
+            </div>
+          </div>
+          {% endfor %}
+          <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+            <a {% if articles.has_previous %}href="?page={{ articles.previous_page_number }}"{% endif %} class="demo-nav__button">
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation"{% if not articles.has_previous %}disabled{% endif %}>
+                <i class="material-icons">arrow_back</i>
+              </button>
+              Newer
+            </a>
+            <div class="section-spacer"></div>
+            <a {% if articles.has_next %}href="?page={{ articles.next_page_number }}"{% endif %} class="demo-nav__button">
+              Older
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation" {% if not articles.has_next %}disabled{% endif %} >
+                <i class="material-icons">arrow_forward</i>
+              </button>
+            </a>
+          </nav>
         </div>
-    </div>
 {% endblock content %}

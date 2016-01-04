@@ -1,29 +1,30 @@
 {% extends "base.html" %}
-{% load i18n bootstrap3 %}
+{% load staticfiles i18n bootstrap3 %}
 
 {% block content %}
-<div id="ww">
-    <div class="container">
-        <div class="row mt">
-            <div class="col-lg-6 col-lg-offset-3 centered">
-                <h3>请联系我！</h3>
-                <hr>
-                <p>欢迎：吐槽探讨<strong>勾搭</strong>谈理想聊人生</p>
-                <p>如回复，定知无不言，言必先Google</p>
-                <p>原则：客(zheng)观(jing)，真(xia)诚(che)</p>
-                <p>或(yi)者(ben)客(zheng)观(jing)且(de)真(xia)诚(che)</p>
-            </div>
+<div class="blog__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta" style="display:block">
+            <h3>请联系我！</h3>
         </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 centered">
-                <form role="form" method="POST">
-                 {% csrf_token %}
-                 {% bootstrap_form form layout='inline' %}
-                  <br>
-                  <button type="submit" class="btn btn-primary">发送</button>
-                </form>
-            </div>
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+            <p>欢迎：吐槽探讨<em>勾搭</em>谈理想聊人生</p>
+            <p>如回复，定知无不言，言必先Google</p>
+            <p>原则：客(zheng)观(jing)，真(xia)诚(che)</p>
+            <p>或(yi)者(ben)客(zheng)观(jing)且(de)真(xia)诚(che)</p>
         </div>
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text" style="text-align:center">
+            <form role="form" method="POST">
+             {% csrf_token %}
+             {% bootstrap_form form layout='inline' %}
+              <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">发送</button>
+            </form>
+        </div>                
     </div>
 </div>
 {% endblock content %}
+
+{% block script %}
+{{ block.super }}
+   <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+{% endblock script %}

@@ -1,65 +1,38 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load duoshuo_tags markdown_support %}
-{% duoshuo_comments %}
+{% load markdown_support humanize %}
 
 {% block content %}
-    <!-- +++++ blog Section +++++ -->
-    <div id="ww">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h1 style="text-align: center">{{ article.caption }}</h1>
-          <hr>
-          {% autoescape off %}
-          {{ article.content|markdown_support }}
-          {% endautoescape %}
-                  <hr>
-          <div class="list-footer">
-              <a>阅读({{ statistic.visits }}) | </a>
-              <a>评论({{ statistic.comments }})| </a>
-              <!-- <span class="ds-thread-count" data-thread-key="{{ article.id }}" data-count-type="comments"></span> -->
-              <a class="link" href="{% url "like_article" article.id%}">喜欢({{ statistic.likes }})</a>
-          </div>
-          <br>
-        </div><!-- /col-lg-8 -->
-      </div><!-- /row -->
+<div class="blog__posts mdl-grid">
+  <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__media mdl-color-text--grey-50">
+      <strong><h3>{{ article.caption }}</h3> </strong>
+      <h4>{{ article.subcaption }}</h4>     
     </div>
-  </div>
-  <div id="white">
-    <div class="container">
-      <div class="row">  
-        <div class="col-lg-8 col-lg-offset-2">
-          <!-- TODO: update thread key title  url etc.. -->
-          {% include "comments.html" %}
-        </div>
-      </div><!-- /row -->
-    </div> <!-- /container -->
-</div><!-- /ww -->
+    <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+      <p>
+        {{ article.content|markdown_support }}
+      </p>
+    </div>
+    {% include "comments.html" %}
+   <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <a href="{{ article.id|add:"1"|urlize }}" class="demo-nav__button">
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+        <i class="material-icons">arrow_back</i>
+      </button>
+      Newer
+    </a>
+    <div class="section-spacer"></div>
+    <a href="{{ article.id|add:"-1"|urlize }}" class="demo-nav__button">
+      Older
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+        <i class="material-icons">arrow_forward</i>
+      </button>
+    </a>
+  </nav>
+</div>
 {% endblock content %}
 <!-- +++++ Projects Section +++++ -->
     
-{% block footer %}  
-{{ block.super }}
-{% endblock footer %}   
 {% block script %}
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"jonwing"};
-      (function() {
-          var ds = document.createElement('script');
-          ds.type = 'text/javascript';ds.async = true;
-          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-          ds.charset = 'UTF-8';
-          (document.getElementsByTagName('head')[0] 
-           || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      (function() {
-          var ds = document.createElement('script');
-          ds.type = 'text/javascript';ds.async = true;
-          ds.src = 'http://static.duoshuo.com/embed.js';
-          ds.charset = 'UTF-8';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-  </script>
-  <!-- 多说公共JS代码 end -->
 {% endblock script %}
