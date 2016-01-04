@@ -1,12 +1,7 @@
 # images
-*.jpeg
-*.jpg
-*.png
-*.ico
-*.gif
+media
 
 # settings
-settings.py
 feiton_cfg_rel.py
 feiton_cfg_dev.py
 
@@ -26,5 +21,5 @@ build
 *_log.txt
 *.log
 
-# migrate scripts
+# migrations scripts
 migrations/00*
