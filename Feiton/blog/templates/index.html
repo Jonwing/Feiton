@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load  markdown_support humanize %}
 
+
 {% block content %}
 	<div class="blog__posts mdl-grid">
           <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
@@ -25,11 +26,9 @@
               </div>
             </div>
             <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
-            
-               {% autoescape off %}
+              <p>
               {{ article.content|markdown_support }}
-              {% endautoescape %}
-                  
+             </p>   
             </div>
           {% include "comments.html"%}
            <nav class="demo-nav mdl-cell mdl-cell--12-col">
