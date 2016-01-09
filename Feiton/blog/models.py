@@ -99,7 +99,7 @@ class Topset(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article)
-    created_time = models.DateTimeField(default=timezone.now())
+    created_time = models.DateTimeField(default=timezone.now)
     is_public = models.BooleanField(default=True)
     reply_to = models.IntegerField(null=True)
     commenter = models.CharField(max_length=30)
