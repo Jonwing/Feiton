@@ -4,26 +4,14 @@
 import threading
 import datetime
 
-from django.http import HttpResponse
 from django.template import RequestContext
-from django.core.exceptions import ObjectDoesNotExist
-from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
 from django.views.generic import FormView
 from django.shortcuts import (render_to_response, get_object_or_404,
                               Http404, redirect)
-from forms import ContactForm
-from models import Article, Topset, Statistic, Comment
-from Feiton.settings import (
-    ARTICLES_PER_PAGE,
-    DUOSHUO_BASE_URL,
-    DUOSHUO_COMMENTS_SYNC_POSTFIX,
-    DUOSHUO_SECRET,
-    DUOSHUO_LOCAL_DOMAIN_NAME
-    )
-
-from utils.models import Duoshuoattr
-from utils.duoshuoapi import get_comments_from_duoshuo
+from blog.forms import ContactForm
+from blog.models import Article, Topset, Statistic
 
 
 def index(request):
@@ -37,7 +25,7 @@ def index(request):
 
 def articles_list(request):
     all_articles = Article.objects.order_by("-publish_time").all()
-    paginator = Paginator(all_articles, ARTICLES_PER_PAGE)
+    paginator = Paginator(all_articles, settings.ARTICLES_PER_PAGE)
     page = request.GET.get('page', 1)
     try:
         articles = paginator.page(page)
@@ -79,45 +67,6 @@ def like_article(request, article_id):
         request.session['like_%s' % article_id] = 'liked'
 
     return redirect("article_detail", id=article.id, slug=article.slug)
-
-
-# Deprecated
-def sync_comments(request):
-    last_log = Duoshuoattr.objects.order_by('-create_time')[0]
-    json_comment = get_comments_from_duoshuo(
-        DUOSHUO_BASE_URL+DUOSHUO_COMMENTS_SYNC_POSTFIX,
-        short_name=DUOSHUO_LOCAL_DOMAIN_NAME,
-        secret=DUOSHUO_SECRET,
-        since_id=last_log.since_id
-        )
-    if json_comment is None:
-        raise Http404
-    for cm in json_comment['response']:
-        if cm['action'] == 'create':
-            try:
-                article = Article.objects.get(id=cm['meta']['thread_key'])
-            except ObjectDoesNotExist:
-                continue
-            comment, created = Comment.objects.update_or_create(
-                article=Article.objects.get(id=cm['meta']['thread_key']),
-                commenter=cm['meta'].get('author_name', 'Passanger'),
-                commenter_email=cm['meta'].get('author_email', None),
-                content=cm['meta'].get('message', 'no message'),
-                defaults={'created_time': cm['meta']['created_at']}
-                )
-        if cm == json_comment['response'][-1]:
-            last_sync_id = Duoshuoattr(since_id=int(cm['log_id']))
-            last_sync_id.save()
-    # update comment number
-    all_articles = Article.objects.all()
-    for article in all_articles:
-        cms = Comment.objects.filter(article=article).count()
-        if cms:
-            Statistic.objects.update_or_create(
-                article=article,
-                defaults={'comments': article.statistic and cms or 0}
-                )
-    return HttpResponse(status=200)
 
 
 def sort_articles_by_month():
