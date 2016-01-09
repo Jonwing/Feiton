@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2g1887q3=p4m$203r($jgd_=90xh$8!4h46z(nr3ot^a$w8)gm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'blog',
-    'utils',
     'bootstrap3',
     'pagedown',
 )
@@ -116,6 +115,7 @@ STATICFILES_DIRS = (
 )
 
 ARTICLES_PER_PAGE = 15
+ABSTRACTION_LENGTH = 200
 
 if DEBUG:
     from Feiton.config.feiton_cfg_dev import *
