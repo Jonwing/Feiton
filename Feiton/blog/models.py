@@ -6,9 +6,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
-from DjangoUeditor.models import UEditorField
 from django.utils import timezone
-# from utils.mails import send_format_mail
 
 
 class Author(models.Model):
@@ -57,7 +55,6 @@ class Article(models.Model):
     author = models.ForeignKey(Author)
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
-    abstract = models.TextField(blank=True)
     content = models.TextField()
     slug = models.SlugField(max_length=128, default=u'detail')
 

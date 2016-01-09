@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load humanize %}
+{% load humanize blog_support %}
 
 {% block content %}
 <div class="blog__posts mdl-grid">
@@ -12,7 +12,7 @@
             <hr>
             <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
               {% autoescape off %}
-                {{ article.abstract }}
+                {{ article.content|abstract }}
               {% endautoescape %}
             </div>
             <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">

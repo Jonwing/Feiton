@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load markdown_support humanize %}
+{% load blog_support humanize %}
+{% block title %}
+<title> iLazur - {{ article.caption }} </title>
+{% endblock %}
 
 {% block content %}
 <div class="blog__posts mdl-grid">
