@@ -47,8 +47,8 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-    caption = models.CharField(u"标题", max_length=30)
-    subcaption = models.CharField(u"副标题", max_length=30, blank=True)
+    caption = models.CharField(u"标题", max_length=64)
+    subcaption = models.CharField(u"副标题", max_length=64, blank=True)
     publish_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
