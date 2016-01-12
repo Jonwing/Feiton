@@ -94,7 +94,7 @@ class Topset(models.Model):
         ordering = ['-created_time']
 
     def __unicode__(self):
-        return str(self.topset)
+        return self.topset.caption
 
 
 class Comment(models.Model):
