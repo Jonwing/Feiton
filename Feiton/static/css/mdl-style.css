@@ -194,7 +194,7 @@ body .blog {
 }
 .blog--blogpost .blog__posts > .mdl-card .mdl-card__media {
   background-image: url('images/post-header.jpg');
-  height: 240px;
+  height: 200px;
 }
 .blog--blogpost .comments {
   background-color: #EEE;

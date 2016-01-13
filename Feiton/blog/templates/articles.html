@@ -7,7 +7,7 @@
 {% for article in articles %}
            <div class="mdl-card image-card mdl-cell mdl-cell--12-col">
              <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta" >
-              <h3><a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a></h3>
+              <h3 style="font-size: 22px"><a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a></h3>
             </div>
             <hr>
             <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
