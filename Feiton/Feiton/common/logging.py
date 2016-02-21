@@ -10,8 +10,9 @@ class AccessMiddleware(object):
     def process_request(self, request):
         ip = self.get_client_ip(request)
         # ip_data = self.query_ip_info(ip)
-        ipinfo, _ = RemoteIP.objects.get_or_create(ip=ip)
-        query_ip_info.delay(ip)
+        ipinfo, created = RemoteIP.objects.get_or_create(ip=ip)
+        if created:
+            query_ip_info.delay(ip)
         if not request.path.startswith('/admin'):
             AccessLog.objects.create(ip=ipinfo, request_path=request.path)
         return None

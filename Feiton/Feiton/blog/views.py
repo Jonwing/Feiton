@@ -90,11 +90,12 @@ class ContactView(FormView):
     form_class = ContactForm
 
     def form_valid(self, form):
-        # TODO: use celery to send email
-        mail_thread = threading.Thread(
-            target=form.send_format_mail,
-            name="Feiton Email Thread",
-            args=(form.cleaned_data,)
-            )
-        mail_thread.start()
+        form.send_format_mail(form.cleaned_data)
+        # mail_thread = threading.Thread(
+        #     target=form.send_format_mail,
+        #     name="Feiton Email Thread",
+        #     args=(form.cleaned_data,)
+        #     )
+        # mail_thread.start()
+
         return render_to_response(self.success_template)
