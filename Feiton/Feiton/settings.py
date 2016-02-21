@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2g1887q3=p4m$203r($jgd_=90xh$8!4h46z(nr3ot^a$w8)gm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,8 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'bootstrap3',
     'pagedown',
-    'blog',
-    'common',
+    'Feiton.blog',
+    'Feiton.common',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'common.logging.AccessMiddleware',
+    # 'Feiton.common.logging.AccessMiddleware',
 )
 
 ROOT_URLCONF = 'Feiton.urls'

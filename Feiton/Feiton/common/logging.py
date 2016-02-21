@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import requests
-from common.models import RemoteIP
+from Feiton.common.models import RemoteIP
 
 IPLIB_API_URL = 'http://ip.taobao.com/service/getIpInfo.php'
 

@@ -9,8 +9,8 @@ from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from blog.models import Article
-from blog.utils import HTMLSummary
+from Feiton.blog.models import Article
+from Feiton.blog.utils import HTMLSummary
 
 register = template.Library()
 

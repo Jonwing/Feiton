@@ -10,8 +10,8 @@ from django.conf import settings
 from django.views.generic import FormView
 from django.shortcuts import (render_to_response, get_object_or_404,
                               Http404, redirect)
-from blog.forms import ContactForm
-from blog.models import Article, Topset, Statistic
+from Feiton.blog.forms import ContactForm
+from Feiton.blog.models import Article, Topset, Statistic
 
 
 def index(request):
