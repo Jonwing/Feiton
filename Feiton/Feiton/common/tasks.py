@@ -2,21 +2,25 @@
 # -*- coding: utf-8 -*-
 
 
+import re
 import requests
-from celery import task
-
-from common.models import RemoteIP
+import json
+from Feiton.celery import app
+from Feiton.common.models import RemoteIP
 
 IPLIB_API_URL = 'http://ip.taobao.com/service/getIpInfo.php'
 ip_info = (u'country', u'area', u'region', u'city', u'ip', u'isp',)
 
 
-@task()
+@app.task
 def query_ip_info(ip):
     params = {'ip': ip}
     ip_data = {}
     r = requests.get(IPLIB_API_URL, params=params)
-    response_json = r.json()
+    # TODO: sometimes the response from the api is not pure json...
+    # wtf...change api?
+    cleaned_response = re.sub('<script.*$', '', r.text)
+    response_json = json.loads(cleaned_response)
     print "querying ip info..."
     if response_json.get(u'code') == 0:
         ip_data.update(
