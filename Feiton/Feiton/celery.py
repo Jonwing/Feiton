@@ -9,7 +9,7 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Feiton.settings')
 # temperory, should not do that at production
-os.environ.setdefault('C_FORCE_ROOT', True)
+os.environ.setdefault('C_FORCE_ROOT', 'true')
 
 from django.conf import settings  # noqa
 
