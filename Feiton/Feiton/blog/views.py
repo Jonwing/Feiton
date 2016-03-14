@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import threading
 import datetime
 
-from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
-from django.views.generic import FormView
 from django.shortcuts import (render_to_response, get_object_or_404,
                               Http404, redirect)
+from django.template import RequestContext
+from django.views.generic import FormView
+
 from Feiton.blog.forms import ContactForm
 from Feiton.blog.models import Article, Topset, Statistic
+from Feiton.common.logging import record_ip
 
 
 def index(request):
@@ -37,6 +38,7 @@ def articles_list(request):
     return render_to_response("articles.html", {"articles": articles})
 
 
+@record_ip
 def article_detail(request, id, slug):
     article = get_object_or_404(Article, id=id, slug=slug)
     statistic = Statistic.objects.update_or_create(
@@ -58,6 +60,7 @@ def about(request):
     raise Http404
 
 
+@record_ip
 def like_article(request, article_id):
     article = get_object_or_404(Article, pk=int(article_id))
     print article
@@ -73,6 +76,7 @@ def sort_articles_by_month():
     '''
     return a list of articles grouped by month
     [[article01, article02,...],[article21,article22,...],...]
+    will be deprecated soon.
     '''
     publish_times = Article.objects.values_list('publish_time', flat=True)
     months = set(
@@ -91,11 +95,8 @@ class ContactView(FormView):
 
     def form_valid(self, form):
         form.send_format_mail(form.cleaned_data)
-        # mail_thread = threading.Thread(
-        #     target=form.send_format_mail,
-        #     name="Feiton Email Thread",
-        #     args=(form.cleaned_data,)
-        #     )
-        # mail_thread.start()
-
         return render_to_response(self.success_template)
+
+    # TODO: @record ip?
+    def post(self, request, *args, **kwargs):
+        return super(ContactView, self).post(request, *args, **kwargs)
