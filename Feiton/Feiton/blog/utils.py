@@ -2,11 +2,28 @@
 # -*- coding:utf-8 -*-
 
 from __future__ import unicode_literals
+import importlib
 from HTMLParser import HTMLParser
+from django.conf import settings
+from django.conf.urls import url
+
+url_patterns = importlib.import_module(settings.ROOT_URLCONF).urlpatterns
 
 
-# get HTML summary
+def register_path(path='', name=None):
+    '''
+    一个类似于flask @route('/xxx')的装饰器，写来玩玩～
+    '''
+    def func_wrapper(func):
+        url_patterns.append(url(path, func, name=name))
+        return func
+    return func_wrapper
+
+
 class HTMLSummary(HTMLParser):
+    '''
+    HTML摘要。
+    '''
 
     def __init__(self, count):
         HTMLParser.__init__(self)
