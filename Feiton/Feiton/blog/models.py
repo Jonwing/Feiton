@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
 from django.utils import timezone
 
 
@@ -55,7 +56,7 @@ class Article(models.Model):
     author = models.ForeignKey(Author)
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
-    content = models.TextField()
+    content = RichTextUploadingField()
     slug = models.SlugField(max_length=128, default=u'detail')
 
     class Meta:
