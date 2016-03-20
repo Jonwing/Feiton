@@ -68,7 +68,7 @@ body .blog {
 }
 .blog .mdl-card__supporting-text:not(:last-child) {
   box-sizing: border-box;
-  min-height: 76px;
+  min-height: 32px;
 }
 .blog:not(.blog--blogpost) .mdl-card__supporting-text ~ .mdl-card__supporting-text {
   border-top: 1px solid rgba(0,0,0,0.1);
@@ -79,7 +79,7 @@ body .blog {
 }
 .blog .meta {
   box-sizing: border-box;
-  padding: 16px;
+  padding: 6px 12px 6px 18px;
   display: flex;
   flex-direction: row;
   align-items: center;

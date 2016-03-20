@@ -16,12 +16,10 @@
               {% endautoescape %}
             </div>
             <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-              <div class="minilogo"></div>
-              <div>
-                <strong>{{ article.author }}</strong>
-                <span>{{ article.update_time|naturaltime }}</span>
-              </div>
                <div class="mdl-layout-spacer"></div>
+              <div>
+                <span style="padding-right: 12px">{{ article.update_time|naturaltime }}</span>
+              </div>
               <a href="{% url "article_detail" article.id article.slug %}" class="demo-nav__button" title="show more">
               <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                 <i class="material-icons" role="presentation">arrow_forward</i>
