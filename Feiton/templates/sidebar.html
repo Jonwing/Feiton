@@ -15,5 +15,29 @@
       <a class="mdl-navigation__link" href="{% url "articles" %}">文章</a>
       <a class="mdl-navigation__link" href="{% url "contact_me" %}">私信</a>
       <a class="mdl-navigation__link" href="{% url "about" %}">关于</a>
+      <div class="inline-dropdown">
+        <a class="mdl-navigation__link" href="#">标签</a>
+        <div class="mdl-layout-spacer"></div>
+        <button id="tags-right" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">arrow_drop_down</i>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="tags-right">
+        {% for tag in tags %}
+          <a class="mdl-menu__item" href="{% url "archieve" %}?tag={{ tag.name }}">{{ tag.name }}</a>
+        {% endfor %}
+        </ul>
+      </div>
+      <div class="inline-dropdown">
+        <a class="mdl-navigation__link" href="#">分类</a>
+        <div class="mdl-layout-spacer"></div>
+        <button id="ctg-right" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">arrow_drop_down</i>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="ctg-right">
+        {% for ctg in ctgs %}
+          <a class="mdl-menu__item" href="{% url "archieve" %}?ctg={{ ctg.name }}">{{ ctg.name }}</a>
+        {% endfor %}
+        </ul>
+      </div>
     </nav>
   </div>

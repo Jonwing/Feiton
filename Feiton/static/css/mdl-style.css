@@ -376,3 +376,10 @@ body .blog {
     padding-top: 12px;
     color: #757575;
 }
+.inline-dropdown{
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}

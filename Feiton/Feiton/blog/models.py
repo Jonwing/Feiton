@@ -24,7 +24,7 @@ class Author(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(u"标签", max_length=30)
+    name = models.CharField(u"标签", max_length=30, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -36,7 +36,7 @@ class Tag(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(u"分类", max_length=50)
+    name = models.CharField(u"分类", max_length=50, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:

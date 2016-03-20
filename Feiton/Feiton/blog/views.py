@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals, absolute_import
 import datetime
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -8,17 +9,29 @@ from django.conf import settings
 from django.shortcuts import (render_to_response, get_object_or_404,
                               Http404, redirect)
 from django.template import RequestContext
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 
 from Feiton.blog.forms import ContactForm
-from Feiton.blog.models import Article, Topset, Statistic
+from Feiton.blog.models import Article, Topset, Statistic, Tag, Category
 from Feiton.common.logging import record_ip
+
+
+def render_with_common_context(template_name, dct=None, context_instance=None):
+    '''
+    get common context, tags, categories, etc...
+    '''
+    ctx = {
+        'tags': Tag.objects.all(),
+        'ctgs': Category.objects.all()
+    }
+    ctx.update(dct) if dct else ctx
+    return render_to_response(template_name, ctx, context_instance)
 
 
 def index(request):
     specified_post = Topset.objects.first().topset
 
-    return render_to_response(
+    return render_with_common_context(
         "index.html",
         {"article": specified_post},
         context_instance=RequestContext(request))
@@ -35,7 +48,7 @@ def articles_list(request):
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
 
-    return render_to_response("articles.html", {"articles": articles})
+    return render_with_common_context("articles.html", {"articles": articles})
 
 
 @record_ip
@@ -46,7 +59,7 @@ def article_detail(request, id, slug):
         defaults={
             "visits": (article.statistic and article.statistic.visits+1 or 1)}
         )[0]
-    return render_to_response(
+    return render_with_common_context(
         "article_detail.html",
         {
             "article": article,
@@ -63,7 +76,6 @@ def about(request):
 @record_ip
 def like_article(request, article_id):
     article = get_object_or_404(Article, pk=int(article_id))
-    print article
     if not request.session.get('like_%s' % article_id, None):
         article.statistic.likes += 1
         article.statistic.save()
@@ -95,8 +107,66 @@ class ContactView(FormView):
 
     def form_valid(self, form):
         form.send_format_mail(form.cleaned_data)
-        return render_to_response(self.success_template)
+        return render_with_common_context(self.success_template)
 
     # TODO: @record ip?
     def post(self, request, *args, **kwargs):
         return super(ContactView, self).post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'tags': Tag.objects.all(),
+            'ctgs': Category.objects.all()
+            })
+        return super(ContactView, self).get_context_data(**kwargs)
+
+
+class ArticlesView(ListView):
+    '''
+    A view used to render some articles of specific queries.
+    Like filtered by tags or categories
+    '''
+    queryset = Article.objects.all()
+    ordering = '-update_time'
+    template_name = 'articles.html'
+    context_object_name = 'articles'
+    model = Article
+
+    def get_articles(self, request):
+        tag = request.GET.get('tag')
+        ctg = request.GET.get('ctg')
+        if tag:
+            return self.filter_by_tag(tag)
+        if ctg:
+            return self.filter_by_category(ctg)
+        return self.queryset
+
+    def filter_by_tag(self, tag):
+        try:
+            tag = Tag.objects.get(name=tag)
+            self.queryset = Article.objects.filter(tags=tag)
+        except Tag.DoesNotExist:
+            pass
+        return self.queryset
+
+    def filter_by_category(self, ctg):
+        try:
+            ctg = Category.objects.get(name=ctg)
+            self.queryset = Article.objects.filter(catagory=ctg)
+        except Category.DoesNotExist:
+            pass
+        return self.queryset
+
+    def archieve(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        self.get_articles(request)
+        return super(ArticlesView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'tags': Tag.objects.all(),
+            'ctgs': Category.objects.all()
+            })
+        return super(ArticlesView, self).get_context_data(**kwargs)
