@@ -135,27 +135,18 @@ class ArticlesView(ListView):
     def get_articles(self, request):
         tag = request.GET.get('tag')
         ctg = request.GET.get('ctg')
-        if tag:
-            return self.filter_by_tag(tag)
-        if ctg:
-            return self.filter_by_category(ctg)
-        return self.queryset
+        # if tag:
+        #     return self.filter_by_tag(tag)
+        # if ctg:
+        #     return self.filter_by_category(ctg)
+        self.filter_by_ctg_or_tag(ctg, tag)
 
-    def filter_by_tag(self, tag):
-        try:
-            tag = Tag.objects.get(name=tag)
-            self.queryset = Article.objects.filter(tags=tag)
-        except Tag.DoesNotExist:
-            pass
-        return self.queryset
-
-    def filter_by_category(self, ctg):
-        try:
-            ctg = Category.objects.get(name=ctg)
-            self.queryset = Article.objects.filter(catagory=ctg)
-        except Category.DoesNotExist:
-            pass
-        return self.queryset
+    def filter_by_ctg_or_tag(self, ctg=None, tag=None):
+        if not ctg and not tag:
+            return
+        # filter_model = Category if ctg else Tag
+        filter_kwarg = {'catagory__name': ctg} if ctg else {'tags__name': tag}
+        self.queryset = Article.objects.filter(**filter_kwarg)
 
     def archieve(self):
         pass
