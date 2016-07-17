@@ -7,15 +7,21 @@
 
 {% block content %}
 <div class="blog__posts mdl-grid">
-  <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-    <div class="mdl-card__media mdl-color-text--grey-50">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+  <div class="mdl-card__title">
+    <div class="mdl-card__title-text">
       <strong><h3>{{ article.caption }}</h3> </strong>
       <h4>{{ article.subcaption }}</h4>     
     </div>
-    <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
-      <p>
+    </div>
+    <hr class="separate">
+    <div class="mdl-card__supporting-text mdl-color-text--grey-700">
+    {% autoescape off %}
         {{ article.content|markdown_support }}
-      </p>
+    {% endautoescape %}
+    </div>
+    <div class="mdl-card__actions card-meta">
+    <p class="action-right"> {{ article.update_time|naturaltime }} </p>
     </div>
     {% include "comments.html" %}
    <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">

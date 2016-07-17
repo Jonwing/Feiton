@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
 import markdown2
 
 from django import template
@@ -38,3 +39,13 @@ def get_article_abstraction(content):
     summary_parser = HTMLSummary(settings.ABSTRACTION_LENGTH)
     summary_parser.feed(content)
     return summary_parser.get_summary()
+
+
+@register.filter(name='remove_p')
+def remove_p(content):
+    ptn = re.compile(r"<img[^>]+src\s*=\s*['\"]([^'\"]+)['\"][^>]*>")
+    m = ptn.search(content)
+    if m:
+        return m.group()
+    else:
+        return content

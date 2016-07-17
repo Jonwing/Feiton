@@ -11,7 +11,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="{% static "media/images/favicon.ico" %}">
     {% block title %}
-    <title> iLazur </title>
+    <title> Lazur </title>
     {% endblock title %}
     <!-- highlight.js -->
     <link rel="stylesheet" href="{% static "css/github.css" %}">
@@ -21,7 +21,7 @@
      <link href="{% static "css/mdl-style.css" %}" rel="stylesheet">
 
     <!-- styles for this template -->
-    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    <!-- <link href="{% static "css/main.css" %}" rel="stylesheet"> -->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -36,7 +36,7 @@
     <div id="wx_share_logo" style="display: none">
       <img src="{% static "media/images/wx_share_ico.png" %}"> 
     </div>
-    <div class="blog blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">
+    <div class="mdl-layout mdl-js-layout blog blog--blogpost has-drawer is-upgraded">
       {% include 'sidebar.html' %}
         <main class="mdl-layout__content">
           {% block content %}
@@ -51,7 +51,7 @@
     <script src="{% static "js/material.min.js"%}"></script>
     <script src="{% static "js/highlight.pack.js" %}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static "css/mdl-icon.css" %}">
     {% block script %}
     {% endblock script %}
   </body>

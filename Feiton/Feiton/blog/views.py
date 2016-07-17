@@ -29,11 +29,15 @@ def render_with_common_context(template_name, dct=None, context_instance=None):
 
 
 def index(request):
-    specified_post = Topset.objects.first().topset
+    '''
+    index page, a timeline
+    '''
+    # specified_post = Topset.objects.first().topset
+    timeline = Article.objects.all()
 
     return render_with_common_context(
         "index.html",
-        {"article": specified_post},
+        {"objects": timeline},
         context_instance=RequestContext(request))
 
 
@@ -58,15 +62,15 @@ def article_detail(request, id, slug):
         article=article,
         defaults={
             "visits": (article.statistic and article.statistic.visits+1 or 1)}
-        )[0]
+    )[0]
     return render_with_common_context(
         "article_detail.html",
         {
             "article": article,
             "statistic": statistic
-            },
+        },
         context_instance=RequestContext(request)
-        )
+    )
 
 
 def about(request):
@@ -145,7 +149,7 @@ class ArticlesView(ListView):
         if not ctg and not tag:
             return
         # filter_model = Category if ctg else Tag
-        filter_kwarg = {'catagory__name': ctg} if ctg else {'tags__name': tag}
+        filter_kwarg = {'catagory__code': ctg} if ctg else {'tags__code': tag}
         self.queryset = Article.objects.filter(**filter_kwarg)
 
     def archieve(self):
@@ -159,5 +163,5 @@ class ArticlesView(ListView):
         kwargs.update({
             'tags': Tag.objects.all(),
             'ctgs': Category.objects.all()
-            })
+        })
         return super(ArticlesView, self).get_context_data(**kwargs)

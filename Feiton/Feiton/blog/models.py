@@ -25,6 +25,7 @@ class Author(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(u"标签", max_length=30, unique=True)
+    code = models.CharField(u'code', max_length=32, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -37,6 +38,7 @@ class Tag(models.Model):
 
 class Category(models.Model):
     name = models.CharField(u"分类", max_length=50, unique=True)
+    code = models.CharField(u'code', max_length=32, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -57,6 +59,7 @@ class Article(models.Model):
     catagory = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
     content = RichTextUploadingField()
+    shorttext = models.CharField(u'短描述', max_length=256, blank=True)
     slug = models.SlugField(max_length=128, default=u'detail')
 
     class Meta:

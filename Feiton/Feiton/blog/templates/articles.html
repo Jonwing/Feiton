@@ -3,45 +3,63 @@
 {% load humanize blog_support %}
 
 {% block content %}
-<div class="blog__posts mdl-grid">
-{% for article in articles %}
-           <div class="mdl-card image-card mdl-cell mdl-cell--12-col">
-             <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta" >
-              <h3 style="font-size: 22px"><a href="{% url "article_detail" article.id article.slug %}">{{ article.caption }}</a></h3>
-            </div>
-            <hr>
-            <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
-              {% autoescape off %}
-                {{ article.content|abstract }}
-              {% endautoescape %}
-            </div>
-            <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-               <div class="mdl-layout-spacer"></div>
-              <div>
-                <span style="padding-right: 12px">{{ article.update_time|naturaltime }}</span>
-              </div>
-              <a href="{% url "article_detail" article.id article.slug %}" class="demo-nav__button" title="show more">
-              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                <i class="material-icons" role="presentation">arrow_forward</i>
-              </button>
-            </a>
-            </div>
-          </div>
-          {% endfor %}
-          <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-            <a {% if articles.has_previous %}href="?page={{ articles.previous_page_number }}"{% endif %} class="demo-nav__button">
-              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation"{% if not articles.has_previous %}disabled{% endif %}>
-                <i class="material-icons">arrow_back</i>
-              </button>
-              Newer
-            </a>
-            <div class="section-spacer"></div>
-            <a {% if articles.has_next %}href="?page={{ articles.next_page_number }}"{% endif %} class="demo-nav__button">
-              Older
-              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation" {% if not articles.has_next %}disabled{% endif %} >
-                <i class="material-icons">arrow_forward</i>
-              </button>
-            </a>
-          </nav>
-        </div>
+<div class="mdl-grid blog__posts">
+{% for obj in articles %}
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+    {% if obj.catagory.code == 'text' %}
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text"><a href="{% url "article_detail" obj.id obj.slug %}"> {{ obj.caption }} </a></h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        {% autoescape off %}
+          {{ obj.content|abstract }}
+        {% endautoescape %}
+      </div>
+      <hr class="separate">
+      <div class="mdl-card__actions card-meta">
+      {% for tag in obj.tags.all %}
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+      {% endfor %}
+<!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> #长文 </button>
+ -->        <!-- <div class="mdl-layout-spacer"></div> -->
+        <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
+      </div>
+    {% elif obj.catagory.code == 'mtext' %}
+      <div class="mdl-card__title">
+        <h4 class="quote">
+          <a href="{% url "article_detail" obj.id obj.slug %}">
+            {% autoescape off %}
+              {{ obj.content|abstract }}
+            {% endautoescape %}
+          </a>
+        </h4>
+      </div>
+      <hr class="separate">
+      <div class="mdl-card__actions card-meta">
+        {% for tag in obj.tags.all %}
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+        {% endfor %}
+        <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
+      </div>
+    {% elif obj.catagory.code == 'img' %}
+      <div class="mdl-card__media">
+        {% autoescape off %}
+          {{ obj.content|remove_p}}
+        {% endautoescape %}
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{ obj.shorttext }}
+      </div>
+      <div class="mdl-card__actions card-meta">
+        {% for tag in obj.tags.all %}
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+        {% endfor %}
+<!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> #图片 </button> -->
+        <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
+      </div>    
+    {% endif %}
+  </div>
+{% endfor %}
+</div>
+
 {% endblock content %}

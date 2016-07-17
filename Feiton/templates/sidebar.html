@@ -1,4 +1,4 @@
-<header class="mdl-layout__header mdl-layout__header--transparent">
+<header class="mdl-layout__header mdl-layout__header--transparent steam-orange">
     <div class="mdl-layout__header-row">
     </div>
   </header>
@@ -12,7 +12,6 @@
     </header>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="/">首页</a>
-      <a class="mdl-navigation__link" href="{% url "articles" %}">文章</a>
       <a class="mdl-navigation__link" href="{% url "contact_me" %}">私信</a>
       <a class="mdl-navigation__link" href="{% url "about" %}">关于</a>
       <div class="inline-dropdown">
@@ -23,7 +22,7 @@
         </button>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="tags-right">
         {% for tag in tags %}
-          <a class="mdl-menu__item" href="{% url "archieve" %}?tag={{ tag.name }}">{{ tag.name }}</a>
+          <a class="mdl-menu__item" href="{% url "archieve" %}?tag={{ tag.code }}">{{ tag.name }}</a>
         {% endfor %}
         </ul>
       </div>
@@ -35,7 +34,7 @@
         </button>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="ctg-right">
         {% for ctg in ctgs %}
-          <a class="mdl-menu__item" href="{% url "archieve" %}?ctg={{ ctg.name }}">{{ ctg.name }}</a>
+          <a class="mdl-menu__item" href="{% url "archieve" %}?ctg={{ ctg.code }}">{{ ctg.name }}</a>
         {% endfor %}
         </ul>
       </div>
