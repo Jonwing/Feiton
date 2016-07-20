@@ -94,6 +94,7 @@ a:after {
 
 .blog .mdl-card__media img {
   width: 100%!important;
+  height: 100%!important;
 }
 
 .blog .mdl-card__title .quote p{
