@@ -33,7 +33,7 @@ def index(request):
     index page, a timeline
     '''
     # specified_post = Topset.objects.first().topset
-    timeline = Article.objects.all()
+    timeline = Article.objects.order_by('-update_time').all()
 
     return render_with_common_context(
         "index.html",
