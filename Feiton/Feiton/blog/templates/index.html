@@ -24,7 +24,7 @@
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
       </div>
     {% elif obj.catagory.code == 'img' %}
-      <div class="mdl-card__media">
+      <div class="mdl-card__media" link="{% url "article_detail" obj.id obj.slug %}">
         <!-- <img src="{% static "media/images/wx_share_ico.png" %}" alt> -->
         {% autoescape off %}
           {{ obj.content|remove_p}}
@@ -62,18 +62,20 @@
   </div>
 {% endfor %}
 </div>
-
 {% endblock content %}
 	
 {% block footer %}	
 {{ block.super }}
 {% endblock footer %}	
 {% block script %}
-{{ block super }}
 <script type="text/javascript">
-  $(".tag-button").click(function(){
+  $('.tag-button').click(function(){
     var archive_url = "{% url "archieve" %}?tag=" + $(this).val();
     window.location.href = archive_url;
+  });
+  $('.mdl-card__media img').click(function(){
+    var link = $(this).parent().attr('link');
+    window.location.href = link;
   });
 </script>
 {% endblock script %}

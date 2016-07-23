@@ -70,5 +70,9 @@
     var archive_url = "{% url "archieve" %}?tag=" + $(this).val();
     window.location.href = archive_url;
   });
+  $('.mdl-card__media img').click(function(){
+    var link = $(this).parent().attr('link');
+    window.location.href = link;
+  });
 </script>
 {% endblock script %}

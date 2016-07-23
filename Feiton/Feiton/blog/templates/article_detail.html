@@ -8,6 +8,7 @@
 {% block content %}
 <div class="blog__posts mdl-grid">
   <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+  {% if article.catagory.code != 'img' %}
   <div class="mdl-card__title">
     <div class="mdl-card__title-text">
       <strong><h3>{{ article.caption }}</h3> </strong>
@@ -20,6 +21,16 @@
         {{ article.content|markdown_support }}
     {% endautoescape %}
     </div>
+  {% else %}
+    <div class="mdl-card__media">
+    {% autoescape off %}
+      {{ article.content|remove_p}}
+    {% endautoescape %}
+    </div>
+    <div class="mdl-card__supporting-text">
+      {{ article.shorttext }}
+    </div>
+  {% endif %}
     <div class="mdl-card__actions card-meta">
     <p class="action-right"> {{ article.update_time|naturaltime }} </p>
     </div>
