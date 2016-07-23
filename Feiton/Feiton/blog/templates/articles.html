@@ -24,7 +24,7 @@
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
       </div>
     {% elif obj.catagory.code == 'img' %}
-      <div class="mdl-card__media">
+      <div class="mdl-card__media" link="{% url "article_detail" obj.id obj.slug %}">
         {% autoescape off %}
           {{ obj.content|remove_p}}
         {% endautoescape %}
