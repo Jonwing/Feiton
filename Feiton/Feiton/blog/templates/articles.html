@@ -19,7 +19,7 @@
       <hr class="separate">
       <div class="mdl-card__actions card-meta">
         {% for tag in obj.tags.all %}
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button" value="{{ tag.code }}"> {{ tag.name }} </button>
         {% endfor %}
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
       </div>
@@ -34,9 +34,9 @@
       </div>
       <div class="mdl-card__actions card-meta">
         {% for tag in obj.tags.all %}
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button" value="{{ tag.code }}"> {{ tag.name }} </button>
         {% endfor %}
-<!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> #图片 </button> -->
+<!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button" value="{{ tag.code }}"> #图片 </button> -->
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
       </div>   
     {% else %}
@@ -51,7 +51,7 @@
       <hr class="separate">
       <div class="mdl-card__actions card-meta">
       {% for tag in obj.tags.all %}
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> {{ tag.name }} </button>
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button" value="{{ tag.code }}"> {{ tag.name }} </button>
       {% endfor %}
 <!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> #长文 </button>
  -->        <!-- <div class="mdl-layout-spacer"></div> -->
@@ -63,3 +63,12 @@
 </div>
 
 {% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+  $(".tag-button").click(function(){
+    var archive_url = "{% url "archieve" %}?tag=" + $(this).val();
+    window.location.href = archive_url;
+  });
+</script>
+{% endblock script %}
