@@ -175,8 +175,11 @@ CKEDITOR_CONFIGS = {
 
 ARTICLES_PER_PAGE = 15
 ABSTRACTION_LENGTH = 200
+LOG_FILE_NAME = os.path.join(BASE_DIR, 'feiton.log')
+
 
 if DEBUG:
     from Feiton.config.feiton_cfg_dev import *
 else:
     from Feiton.config.feiton_cfg_rel import *
+from Feiton.config.logconfig import *  # noqa
