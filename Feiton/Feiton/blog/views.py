@@ -13,7 +13,6 @@ from django.views.generic import FormView, ListView
 
 from Feiton.blog.forms import ContactForm
 from Feiton.blog.models import Article, Topset, Statistic, Tag, Category
-from Feiton.common.logging import record_ip
 
 
 def render_with_common_context(template_name, dct=None, context_instance=None):
@@ -55,7 +54,6 @@ def articles_list(request):
     return render_with_common_context("articles.html", {"articles": articles})
 
 
-@record_ip
 def article_detail(request, id, slug):
     article = get_object_or_404(Article, id=id, slug=slug)
     statistic = Statistic.objects.update_or_create(
@@ -77,7 +75,6 @@ def about(request):
     raise Http404
 
 
-@record_ip
 def like_article(request, article_id):
     article = get_object_or_404(Article, pk=int(article_id))
     if not request.session.get('like_%s' % article_id, None):
@@ -113,7 +110,6 @@ class ContactView(FormView):
         form.send_format_mail(form.cleaned_data)
         return render_with_common_context(self.success_template)
 
-    # TODO: @record ip?
     def post(self, request, *args, **kwargs):
         return super(ContactView, self).post(request, *args, **kwargs)
 
@@ -121,7 +117,7 @@ class ContactView(FormView):
         kwargs.update({
             'tags': Tag.objects.all(),
             'ctgs': Category.objects.all()
-            })
+        })
         return super(ContactView, self).get_context_data(**kwargs)
 
 

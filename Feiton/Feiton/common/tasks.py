@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
+from __future__ import absolute_import
 import re
 import requests
 import json
+import logging
 import time
 from smtplib import SMTPException
 from django.core.mail import send_mail
@@ -15,9 +16,9 @@ from Feiton.settings import EMAIL_SUBJECT_PREFIX, EMAIL_ADDRESS_LIST
 IPLIB_API_URL = 'http://ip.taobao.com/service/getIpInfo.php'
 ip_info = (u'country', u'area', u'region', u'city', u'ip', u'isp',)
 MAX_RETRY = 5
+logger = logging.getLogger(__name__)
 
 
-@app.task
 def query_ip_info(ip):
     params = {'ip': ip}
     ip_data = {}
@@ -31,11 +32,11 @@ def query_ip_info(ip):
             ip_data.update(
                 {k: response_json['data'][k]
                     for k in ip_info if k in response_json['data']}
-                )
+            )
             RemoteIP.objects.filter(ip=ip).update(**ip_data)
             break
         else:
-            time.sleep(0.5*i)
+            time.sleep(0.5 * i)
     return None
 
 
@@ -61,6 +62,6 @@ def send_email(**kwargs):
                 to_address,
                 fail_silently=False)
             break
-        except SMTPException:
-            print "send email failed, retrying..."
+        except SMTPException as e:
+            logger.error("send email failed, retrying..., reason:%s", e)
     return

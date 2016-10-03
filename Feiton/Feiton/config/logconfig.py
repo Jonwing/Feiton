@@ -44,7 +44,7 @@ LOGGING = {
             'propagate': False,
         },
         'Feiton': {
-            'level': 'WARNING',
+            'level': 'INFO',
             'handlers': ['filelog', 'sentry'],
         }
     },

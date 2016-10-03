@@ -15,4 +15,4 @@ admin.site.register([
     Category,
     Statistic,
     Topset
-    ])
+])

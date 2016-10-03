@@ -12,8 +12,6 @@
     </header>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="/">首页</a>
-      <a class="mdl-navigation__link" href="{% url "contact_me" %}">私信</a>
-      <a class="mdl-navigation__link" href="{% url "about" %}">关于</a>
       <div class="inline-dropdown">
         <a class="mdl-navigation__link" href="#">标签</a>
         <div class="mdl-layout-spacer"></div>
@@ -38,5 +36,8 @@
         {% endfor %}
         </ul>
       </div>
+      <a class="mdl-navigation__link" href="{% url "contact_me" %}">联系</a>
+      <a class="mdl-navigation__link" href="{% url "about" %}">关于</a>
     </nav>
   </div>
+  
