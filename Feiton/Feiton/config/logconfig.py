@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf import settings
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -13,10 +11,10 @@ LOGGING = {
         },
     },
     'handlers': {
-        # 'sentry': {
-        #     'level': 'ERROR',
-        #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-        # },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -25,7 +23,7 @@ LOGGING = {
         'filelog': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': settings.LOGGING_FILE_NAME,
+            'filename': '/tmp/feiton_blg.log',
             'formatter': 'normal'
         },
     },

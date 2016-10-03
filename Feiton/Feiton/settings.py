@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'raven.contrib.django.raven_compat',
     'ckeditor',
     'ckeditor_uploader',
     'bootstrap3',
@@ -105,12 +106,6 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'statics')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'statics/media')
-MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -177,9 +172,9 @@ ARTICLES_PER_PAGE = 15
 ABSTRACTION_LENGTH = 200
 LOG_FILE_NAME = os.path.join(BASE_DIR, 'feiton.log')
 
-
-if DEBUG:
-    from Feiton.config.feiton_cfg_dev import *
-else:
-    from Feiton.config.feiton_cfg_rel import *
+# if DEBUG:
+#     from Feiton.config.feiton_cfg_dev import *
+# else:
+#     from Feiton.config.feiton_cfg_rel import *
+from Feiton.config.feiton_config import *  # noqa
 from Feiton.config.logconfig import *  # noqa
