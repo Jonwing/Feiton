@@ -59,7 +59,7 @@ def article_detail(request, id, slug):
     statistic = Statistic.objects.update_or_create(
         article=article,
         defaults={
-            "visits": (article.statistic and article.statistic.visits+1 or 1)}
+            "visits": (article.statistic and article.statistic.visits + 1 or 1)}
     )[0]
     return render_with_common_context(
         "article_detail.html",

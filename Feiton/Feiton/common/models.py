@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-
 import datetime
-from django.utils import timezone
 from django.db import models
 
 
+# deprecated, will be removed some day
 class RemoteIP(models.Model):
     ip = models.CharField(max_length=64, unique=True)
     country = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'国家')
@@ -23,20 +22,8 @@ class RemoteIP(models.Model):
     def __unicode__(self):
         return u"{ip} - {cty}".format(ip=self.ip, cty=self.city)
 
-    # def save(self, *args, **kwargs):
-    #     access_records = self.__class__.objects.filter(ip=self.ip)
-    #     if access_records:
-    #         last_access = access_records.first().accessed_at
-    #         time_from_last_access = timezone.make_aware(
-    #                                     datetime.datetime.now(),
-    #                                     timezone.get_default_timezone()
-    #                                     ) - last_access
-    #         if time_from_last_access < self.save_interval:
-    #             return
 
-    #     return super(RemoteIP, self).save(*args, **kwargs)
-
-
+# deprecated, willed be removed some day
 class AccessLog(models.Model):
     ip = models.ForeignKey(RemoteIP)
     accessed_at = models.DateTimeField(auto_now_add=True, verbose_name=u'访问时间')

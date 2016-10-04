@@ -19,6 +19,7 @@ MAX_RETRY = 5
 logger = logging.getLogger(__name__)
 
 
+# deprecated
 def query_ip_info(ip):
     params = {'ip': ip}
     ip_data = {}
