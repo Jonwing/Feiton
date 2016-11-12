@@ -468,3 +468,7 @@ hr.separate{
   float: right;
   margin: 0 16px;
 }
+
+.pretty-grey{
+  background-color: rgba(246, 246, 246, 1);
+}
