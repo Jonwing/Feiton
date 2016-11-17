@@ -4,8 +4,8 @@
 from __future__ import unicode_literals, absolute_import
 import datetime
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import (render_to_response, get_object_or_404,
                               Http404, redirect)
 from django.template import RequestContext
@@ -58,8 +58,7 @@ def article_detail(request, id, slug):
     article = get_object_or_404(Article, id=id, slug=slug)
     statistic = Statistic.objects.update_or_create(
         article=article,
-        defaults={
-            "visits": (article.statistic and article.statistic.visits + 1 or 1)}
+        defaults={"visits": (article.statistic and article.statistic.visits + 1 or 1)}
     )[0]
     return render_with_common_context(
         "article_detail.html",

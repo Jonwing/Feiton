@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from mistune import markdown
 
 
 class Author(models.Model):
@@ -61,6 +62,7 @@ class Article(models.Model):
     content = RichTextUploadingField()
     shorttext = models.CharField(u'短描述', max_length=256, blank=True)
     slug = models.SlugField(max_length=128, default=u'detail')
+    is_md = models.BooleanField(verbose_name='is markdown format', default=False)
 
     class Meta:
         verbose_name = u'文章'
@@ -70,6 +72,8 @@ class Article(models.Model):
         return self.caption
 
     def save(self, *args, **kwargs):
+        if self.is_md:
+            self.content = markdown(self.content)
         super(Article, self).save(*args, **kwargs)
         statistic, created = Statistic.objects.get_or_create(article=self)
 
@@ -120,17 +124,18 @@ class Comment(models.Model):
 
 
 # signal registration
-@receiver(post_save, sender=Comment)
-def new_comment_remind(sender, **kwargs):
-    new_comment = kwargs.get('instance', None)
-    if new_comment:
-        mail = {
-            'name': new_comment.commenter + "'s comment on ",
-            'subject': str(new_comment.article),
-            'email': new_comment.commenter_email
-            if new_comment.commenter_email else 'someone@unknow.com',
-            'content': new_comment.content
-        }
-        # send_format_mail(mail)
-    else:
-        return
+# deprecated, not used any more
+# @receiver(post_save, sender=Comment)
+# def new_comment_remind(sender, **kwargs):
+#     new_comment = kwargs.get('instance', None)
+#     if new_comment:
+#         mail = {
+#             'name': new_comment.commenter + "'s comment on ",
+#             'subject': str(new_comment.article),
+#             'email': new_comment.commenter_email
+#             if new_comment.commenter_email else 'someone@unknow.com',
+#             'content': new_comment.content
+#         }
+#         send_format_mail(mail)
+#     else:
+#         return

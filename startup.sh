@@ -1,7 +1,8 @@
 #!/bin/bash
 
 cd /application
-# python manage.py migrate --noinput
+echo "running migrate"
+python manage.py migrate --noinput
 echo "running collectstatic"
 python manage.py collectstatic --noinput
 # start supervisord
