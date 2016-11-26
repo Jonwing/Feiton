@@ -74,6 +74,7 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if self.is_md:
             self.content = markdown(self.content)
+            self.is_md = False
         super(Article, self).save(*args, **kwargs)
         statistic, created = Statistic.objects.get_or_create(article=self)
 
