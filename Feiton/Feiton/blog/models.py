@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -77,6 +78,23 @@ class Article(models.Model):
             self.is_md = False
         super(Article, self).save(*args, **kwargs)
         statistic, created = Statistic.objects.get_or_create(article=self)
+
+    @property
+    def newer(self):
+        '''
+        return the newer post
+        '''
+        return Article.objects.filter(publish_time__gt=self.publish_time).first() or self
+
+    @property
+    def older(self):
+        '''
+        return the older post
+        '''
+        return Article.objects.filter(publish_time__lt=self.publish_time).last() or self
+
+    def get_absolute_url(self):
+        return reverse('article_detail', args=(self.id, self.slug))
 
 
 class Statistic(models.Model):

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load blog_support humanize %}
 {% block title %}
-<title> iLazur - {{ article.caption }} </title>
+<title> lAzUr - {{ article.caption }} </title>
 {% endblock %}
 
 {% block content %}
@@ -36,14 +36,14 @@
     </div>
     {% include "comments.html" %}
    <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <a href="{{ article.id|add:"1"|urlize }}" class="demo-nav__button">
+    <a href="{{ article.newer.get_absolute_url }}" class="demo-nav__button">
       <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
         <i class="material-icons">arrow_back</i>
       </button>
       Newer
     </a>
     <div class="section-spacer"></div>
-    <a href="{{ article.id|add:"-1"|urlize }}" class="demo-nav__button">
+    <a href="{{ article.older.get_absolute_url }}" class="demo-nav__button">
       Older
       <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
         <i class="material-icons">arrow_forward</i>
