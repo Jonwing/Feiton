@@ -6,7 +6,6 @@ from Feiton.blog.views import ContactView
 
 urlpatterns = [
     url(r"^$", 'Feiton.blog.views.index', name='home_page'),
-    url(r"^about$", "Feiton.blog.views.about", name="about"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^post/', include('Feiton.blog.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
