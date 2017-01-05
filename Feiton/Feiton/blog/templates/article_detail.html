@@ -7,12 +7,12 @@
 
 {% block content %}
 <div class="blog__posts mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp pretty-grey">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--16dp pretty-grey">
   {% if article.catagory.code != 'img' %}
   <div class="mdl-card__title">
     <div class="mdl-card__title-text">
       <strong><h3>{{ article.caption }}</h3> </strong>
-      <h4>{{ article.subcaption }}</h4>     
+      <h4>{{ article.subcaption }}</h4>
     </div>
     </div>
     <hr class="separate">
@@ -53,6 +53,6 @@
 </div>
 {% endblock content %}
 <!-- +++++ Projects Section +++++ -->
-    
+
 {% block script %}
 {% endblock script %}

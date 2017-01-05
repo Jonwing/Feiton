@@ -5,7 +5,7 @@
 {% block content %}
 <div class="mdl-grid blog__posts">
 {% for obj in articles %}
-  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--16dp">
     {% if obj.catagory.code == 'mtext' %}
       <div class="mdl-card__title">
         <h4 class="quote">
@@ -38,7 +38,7 @@
         {% endfor %}
 <!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button" value="{{ tag.code }}"> #图片 </button> -->
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
-      </div>   
+      </div>
     {% else %}
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text"><a href="{% url "article_detail" obj.id obj.slug %}"> {{ obj.caption }} </a></h2>
@@ -56,7 +56,7 @@
 <!--         <button class="mdl-button mdl-js-button mdl-js-ripple-effect tag-button"> #长文 </button>
  -->        <!-- <div class="mdl-layout-spacer"></div> -->
         <p class="action-right"> {{ obj.update_time|naturaltime }} </p>
-      </div> 
+      </div>
     {% endif %}
   </div>
 {% endfor %}
