@@ -9,9 +9,9 @@ import logging
 import time
 from smtplib import SMTPException
 from django.core.mail import send_mail
+from django.conf import settings
 from Feiton.celery import app
 from Feiton.common.models import RemoteIP
-from Feiton.settings import EMAIL_SUBJECT_PREFIX, EMAIL_ADDRESS_LIST
 
 IPLIB_API_URL = 'http://ip.taobao.com/service/getIpInfo.php'
 ip_info = (u'country', u'area', u'region', u'city', u'ip', u'isp',)
@@ -50,16 +50,15 @@ def send_email(**kwargs):
         content,
         email,
     """
-    subject = EMAIL_SUBJECT_PREFIX + '-' + kwargs['name'] + ':' + kwargs['subject']
-    content = kwargs.get('email', 'nomail@somewhere.com') + '\n' + kwargs['content']
-    from_address = kwargs.get('email', 'noreply@feiton.com')
-    to_address = EMAIL_ADDRESS_LIST
+    subject = settings.EMAIL_SUBJECT_PREFIX + '-' + kwargs['name'] + ':' + kwargs['subject']
+    content = kwargs.get('email', '') + '\n' + kwargs['content']
+    to_address = settings.EMAIL_ADDRESS_LIST
     for i in range(3):
         try:
             send_mail(
                 subject,
                 content,
-                from_address,
+                settings.EMAIL_HOST_USER,
                 to_address,
                 fail_silently=False)
             break
